@@ -7,7 +7,7 @@ class Teacher(models.Model):
     AUTH_STATE_CHOICES = [('UQ', 'unqualified'), ('QD', 'qualified')]
 
     teacher_id = models.AutoField(primary_key=True)                                 # 导师 ID
-    user = models.ForeignKey(User, on_delete=models.CASCADE)                        # 用户账户
+    user = models.OneToOneField(User, on_delete=models.CASCADE)                     # 用户账户
 
     account = models.CharField(max_length=32, null=False, unique=True)              # 账号
     password = models.CharField(max_length=32, null=False)                          # 密码
@@ -35,6 +35,8 @@ class Student(models.Model):
     AUTH_STATE_CHOICES = [('UQ', 'unqualified'), ('QD', 'qualified')]
 
     student_id = models.AutoField(primary_key=True)                                 # 学生 ID
+    user = models.OneToOneField(User, on_delete=models.CASCADE)                     # 用户账户
+    follow = models.ManyToManyField(Teacher)                                        # 关注关系
 
     account = models.CharField(max_length=32, null=False, unique=True)              # 账号
     password = models.CharField(max_length=32, null=False)                          # 密码
@@ -54,5 +56,3 @@ class Student(models.Model):
     student_number = models.CharField(max_length=32)                                # 学号
     id_number = models.CharField(max_length=32)                                     # 身份证号
     auth_state = models.CharField(max_length=2, choices=AUTH_STATE_CHOICES, default='UQ')   # 认证状态
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE)                        # 用户账户

@@ -2,18 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7d6e89dd-d3c2-47ea-91e0-8519c37521f2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/intention/migrations/0001_initial.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user/migrations/0001_initial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conversation/__init__.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/follow/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/information/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/intention/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/intention/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/intention/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recommend/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/search/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/follow/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/follow/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/information/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/information/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/intention/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/intention/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recommend/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/recommend/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/migrations/0001_initial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/models.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -116,7 +115,7 @@
       <updated>1590399421946</updated>
       <workItem from="1590399525844" duration="137000" />
       <workItem from="1590400125557" duration="9136000" />
-      <workItem from="1590414931926" duration="4767000" />
+      <workItem from="1590414931926" duration="8091000" />
     </task>
     <servers />
   </component>
