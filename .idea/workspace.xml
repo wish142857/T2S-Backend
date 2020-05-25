@@ -2,12 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7d6e89dd-d3c2-47ea-91e0-8519c37521f2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/T2S_Backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/T2S_Backend.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/conversation/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/follow/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/information/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/intention/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recommend/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/T2S_Backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/T2S_Backend/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/T2S_Backend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/T2S_Backend/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,6 +38,7 @@
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../iPhoto" />
@@ -93,7 +99,7 @@
       <option name="presentableId" value="Default" />
       <updated>1590399421946</updated>
       <workItem from="1590399525844" duration="137000" />
-      <workItem from="1590400125557" duration="3210000" />
+      <workItem from="1590400125557" duration="4321000" />
     </task>
     <servers />
   </component>
@@ -110,5 +116,8 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

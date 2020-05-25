@@ -37,6 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Register apps here
+    'user',
+    'intention',
+    'information',
+    'conversation',
+    'follow',
+    'search',
+    'recommend',
 ]
 
 MIDDLEWARE = [
