@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7d6e89dd-d3c2-47ea-91e0-8519c37521f2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/conversation/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/follow/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/information/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/intention/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/recommend/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/search/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/T2S_Backend/decorators.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/T2S_Backend/globals.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/T2S_Backend/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/T2S_Backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/T2S_Backend/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/T2S_Backend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/T2S_Backend/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/views.py" afterDir="false" />
     </list>
@@ -99,7 +94,7 @@
       <option name="presentableId" value="Default" />
       <updated>1590399421946</updated>
       <workItem from="1590399525844" duration="137000" />
-      <workItem from="1590400125557" duration="4321000" />
+      <workItem from="1590400125557" duration="8008000" />
     </task>
     <servers />
   </component>
