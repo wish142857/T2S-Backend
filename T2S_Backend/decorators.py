@@ -1,4 +1,6 @@
-# ***** 装饰器 *****
+"""
+装饰器
+"""
 from django.http import HttpResponse, Http404, HttpResponseForbidden
 from django.shortcuts import redirect
 from django.urls import reverse
