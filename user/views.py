@@ -63,8 +63,15 @@ def login(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
     # 查找用户
-    user = auth.authenticate(username=_account, password=_password)
-    if user is None:
+    try:
+        user = auth.authenticate(username=_account, password=_password)
+        if user is None:
+            raise User.DoesNotExist
+        if _type == 'T':
+            Teacher.objects.get(user=user)
+        if _type == 'S':
+            Student.objects.get(user=user)
+    except (User.DoesNotExist, Teacher.DoesNotExist, Student.DoesNotExist):
         response = {'status': False, 'info': F_ERROR_USERNAME_OR_PASSWORD}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # 用户登录
@@ -82,17 +89,99 @@ def logout(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-# TODO
 @ post_required
+@ login_required
 def user_auth(request):
-    response = None
+    # *** 参数获取 ***
+    _type = request.POST.get('type')
+    _teacher_number = request.POST.get('teacher_number')
+    _student_number = request.POST.get('student_number')
+    _id_number = request.POST.get('id_number')
+    # *** 合法性检测 ***
+    if not check_none(_type, _id_number):
+        response = {'status': False, 'info': F_MISSING_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    if (not check_enum(_type, ('T', 'S'))) or (_type == 'T' and not check_none(_teacher_number)) or (_type == 'S' and not check_none(_student_number)):
+        response = {'status': False, 'info': F_ERROR_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # *** 请求处理 ***
+    user = request.user
+    if _type == 'T':
+        try:
+            teacher = Teacher.objects.get(user=user)
+            if auth_teacher(_teacher_number, _id_number):
+                teacher.auth_state = 'QD'
+                teacher.save()
+                response = {'status': True, 'info': S_AUTH_SUCCEED}
+                return HttpResponse(json.dumps(response, ensure_ascii=False))
+            else:
+                response = {'status': False, 'info': F_AUTH_FAIL}
+                return HttpResponse(json.dumps(response, ensure_ascii=False))
+        except Teacher.DoesNotExist:
+            response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+    else:
+        try:
+            student = Student.objects.get(user=user)
+            if auth_student(_student_number, _id_number):
+                student.auth_state = 'QD'
+                student.save()
+                response = {'status': True, 'info': S_AUTH_SUCCEED}
+                return HttpResponse(json.dumps(response, ensure_ascii=False))
+            else:
+                response = {'status': False, 'info': F_AUTH_FAIL}
+                return HttpResponse(json.dumps(response, ensure_ascii=False))
+        except Student.DoesNotExist:
+            response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+
+
+@ post_required
+@ login_required
+def change_password(request):
+    # *** 参数获取 ***
+    _old_password = request.POST.get('old_password')
+    _new_password = request.POST.get('new_password')
+    # *** 合法性检测 ***
+    if not check_none(_old_password, _new_password):
+        response = {'status': False, 'info': F_MISSING_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    if not check_empty(_old_password, _new_password):
+        response = {'status': False, 'info': F_ERROR_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # *** 请求处理 ***
+    user = request.user
+    try:
+        teacher = Teacher.objects.get(user=user)
+        if user.check_password(_old_password):
+            user.set_password(_new_password)
+            user.save()
+            teacher.password = _new_password
+            teacher.save()
+            response = {'status': True, 'info': S_CHANGE_PASSWORD_SUCCEED}
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+        else:
+            response = {'status': False, 'info': F_ERROR_PASSWORD}
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+    except Teacher.DoesNotExist:
+        pass
+    try:
+        student = Student.objects.get(user=user)
+        if user.check_password(_old_password):
+            user.set_password(_new_password)
+            user.save()
+            student.password = _new_password
+            student.save()
+            response = {'status': True, 'info': S_CHANGE_PASSWORD_SUCCEED}
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+        else:
+            response = {'status': False, 'info': F_ERROR_PASSWORD}
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+    except Student.DoesNotExist:
+        pass
+    response = {'status': False, 'info': F_INTERNAL_ERROR}
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
-# TODO
-@ post_required
-def change_password(request):
-    response = None
-    return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 # TODO
 @ get_required
