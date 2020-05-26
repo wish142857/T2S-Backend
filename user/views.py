@@ -1,5 +1,6 @@
 import json
 
+from django.contrib import auth
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.http import HttpResponse
@@ -47,75 +48,85 @@ def logon(request):
 
 
 @ post_required
+@ logout_required
 def login(request):
-    response = None
+    # *** 参数获取 ***
+    _type = request.POST.get('type')
+    _account = request.POST.get('account')
+    _password = request.POST.get('password')
+    # *** 合法性检测 ***
+    if not check_none(_type, _account, _password):
+        response = {'status': False, 'info': F_MISSING_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    if not check_empty(_account) or not check_enum(_type, ('T', 'S')):
+        response = {'status': False, 'info': F_ERROR_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # *** 请求处理 ***
+    # 查找用户
+    user = auth.authenticate(username=_account, password=_password)
+    if user is None:
+        response = {'status': False, 'info': F_ERROR_USERNAME_OR_PASSWORD}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # 用户登录
+    auth.login(request, user)
+    response = {'status': True, 'info': S_LOGIN_SUCCEED}
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
 @ post_required
+@ login_required
 def logout(request):
-    response = None
+    # *** 请求处理 ***
+    auth.logout(request)
+    response = {'status': True, 'info': S_LOGOUT_SUCCEED}
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
+# TODO
 @ post_required
 def user_auth(request):
     response = None
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
-
+# TODO
 @ post_required
 def change_password(request):
     response = None
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
-
+# TODO
 @ get_required
 def get_info(request):
     response = None
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
-
+# TODO
 @ post_required
 def update_info(request):
     response = None
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
-
+# TODO
 @ get_required
 def get_info_plus(request):
     response = None
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
-
+# TODO
 @ post_required
 def update_info_plus(request):
     response = None
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
-
+# TODO
 @ get_required
 def get_info_picture(request):
     response = None
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
-
+# TODO
 @ post_required
 def update_info_picture(request):
     response = None
     return HttpResponse(json.dumps(response, ensure_ascii=False))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
