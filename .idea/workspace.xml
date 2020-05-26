@@ -4,7 +4,6 @@
     <list default="true" id="7d6e89dd-d3c2-47ea-91e0-8519c37521f2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/T2S_Backend/globals.py" beforeDir="false" afterPath="$PROJECT_DIR$/T2S_Backend/globals.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/T2S_Backend/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/T2S_Backend/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/views.py" afterDir="false" />
     </list>
@@ -110,7 +109,7 @@
       <workItem from="1590400125557" duration="9136000" />
       <workItem from="1590414931926" duration="8316000" />
       <workItem from="1590423775753" duration="89000" />
-      <workItem from="1590459780858" duration="13462000" />
+      <workItem from="1590459780858" duration="16582000" />
     </task>
     <servers />
   </component>

@@ -183,38 +183,276 @@ def change_password(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-# TODO
 @ get_required
+@ login_required
 def get_info(request):
-    response = None
-    return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # *** 参数获取 ***
+    _type = request.GET.get('type')
+    _teacher_id = request.GET.get('teacher_id')
+    _student_id = request.GET.get('student_id')
+    # *** 合法性检测 ***
+    if not check_none(_type):
+        response = {'status': False, 'info': F_MISSING_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    if (not check_enum(_type, ('T', 'S', 'I'))) or (_type == 'T' and not check_none(_teacher_id)) or (_type == 'S' and not check_none(_student_id)):
+        response = {'status': False, 'info': F_ERROR_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # *** 请求处理 ***
+    if _type == 'T':
+        try:
+            teacher = Teacher.objects.get(teacher_id=_teacher_id)
+            response = {
+                'status': True,
+                'info': S_QUERY_SUCCEED,
+                'teacher_id': teacher.teacher_id,
+                'account': teacher.account,
+                'name': teacher.name,
+                'gender': teacher.gender,
+                'signature': teacher.signature,
+                'school': teacher.school,
+                'department': teacher.department,
+                'title': teacher.title,
+                'phone': teacher.phone,
+                'email': teacher.email,
+                'homepage': teacher.homepage,
+                'address': teacher.address,
+                'auth_state': teacher.auth_state,
+            }
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+        except Teacher.DoesNotExist:
+            response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+    elif _type == 'S':
+        try:
+            student = Student.objects.get(student_id=_student_id)
+            response = {
+                'status': True,
+                'info': S_QUERY_SUCCEED,
+                'student_id': student.student_id,
+                'account': student.account,
+                'name': student.name,
+                'gender': student.gender,
+                'signature': student.signature,
+                'school': student.school,
+                'department': student.department,
+                'major': student.major,
+                'phone': student.phone,
+                'email': student.email,
+                'homepage': student.homepage,
+                'address': student.address,
+                'auth_state': student.auth_state,
+            }
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+        except Student.DoesNotExist:
+            response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+    else:
+        user = request.user
+        try:
+            teacher = Teacher.objects.get(user=user)
+            response = {
+                'status': True,
+                'info': S_QUERY_SUCCEED,
+                'teacher_id': teacher.teacher_id,
+                'account': teacher.account,
+                'name': teacher.name,
+                'gender': teacher.gender,
+                'signature': teacher.signature,
+                'school': teacher.school,
+                'department': teacher.department,
+                'title': teacher.title,
+                'phone': teacher.phone,
+                'email': teacher.email,
+                'homepage': teacher.homepage,
+                'address': teacher.address,
+                'auth_state': teacher.auth_state,
+                'teacher_number': teacher.teacher_number,
+                'id_number': teacher.id_number,
+            }
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+        except Teacher.DoesNotExist:
+            pass
+        try:
+            student = Student.objects.get(user=user)
+            response = {
+                'status': True,
+                'info': S_QUERY_SUCCEED,
+                'student_id': student.student_id,
+                'account': student.account,
+                'name': student.name,
+                'gender': student.gender,
+                'signature': student.signature,
+                'school': student.school,
+                'department': student.department,
+                'major': student.major,
+                'phone': student.phone,
+                'email': student.email,
+                'homepage': student.homepage,
+                'address': student.address,
+                'auth_state': student.auth_state,
+                'student_number': student.student_number,
+                'id_number': student.id_number,
+            }
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+        except Student.DoesNotExist:
+            pass
+        response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+
 
 # TODO
 @ post_required
+@ login_required
 def update_info(request):
     response = None
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
-# TODO
+
 @ get_required
+@ login_required
 def get_info_plus(request):
-    response = None
-    return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # *** 参数获取 ***
+    _type = request.GET.get('type')
+    _teacher_id = request.GET.get('teacher_id')
+    _student_id = request.GET.get('student_id')
+    # *** 合法性检测 ***
+    if not check_none(_type):
+        response = {'status': False, 'info': F_MISSING_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    if (not check_enum(_type, ('T', 'S', 'I'))) or (_type == 'T' and not check_none(_teacher_id)) or (_type == 'S' and not check_none(_student_id)):
+        response = {'status': False, 'info': F_ERROR_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # *** 请求处理 ***
+    if _type == 'T':
+        try:
+            teacher = Teacher.objects.get(teacher_id=_teacher_id)
+            response = {
+                'status': True,
+                'info': S_QUERY_SUCCEED,
+                'introduction': teacher.introduction,
+                'research_fields': teacher.research_fields,
+                'research_achievements': teacher.research_achievements,
+            }
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+        except Teacher.DoesNotExist:
+            response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+    elif _type == 'S':
+        try:
+            student = Student.objects.get(student_id=_student_id)
+            response = {
+                'status': True,
+                'info': S_QUERY_SUCCEED,
+                'introduction': student.introduction,
+                'research_experience': student.research_experience,
+            }
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+        except Student.DoesNotExist:
+            response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+    else:
+        user = request.user
+        try:
+            teacher = Teacher.objects.get(user=user)
+            response = {
+                'status': True,
+                'info': S_QUERY_SUCCEED,
+                'introduction': teacher.introduction,
+                'research_fields': teacher.research_fields,
+                'research_achievements': teacher.research_achievements,
+            }
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+        except Teacher.DoesNotExist:
+            pass
+        try:
+            student = Student.objects.get(user=user)
+            response = {
+                'status': True,
+                'info': S_QUERY_SUCCEED,
+                'introduction': student.introduction,
+                'research_experience': student.research_experience,
+            }
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+        except Student.DoesNotExist:
+            pass
+        response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 # TODO
 @ post_required
+@ login_required
 def update_info_plus(request):
     response = None
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
-# TODO
+
 @ get_required
+@ login_required
 def get_info_picture(request):
-    response = None
-    return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # *** 参数获取 ***
+    _type = request.GET.get('type')
+    _teacher_id = request.GET.get('teacher_id')
+    _student_id = request.GET.get('student_id')
+    # *** 合法性检测 ***
+    if not check_none(_type):
+        response = {'status': False, 'info': F_MISSING_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    if (not check_enum(_type, ('T', 'S', 'I'))) or (_type == 'T' and not check_none(_teacher_id)) or (_type == 'S' and not check_none(_student_id)):
+        response = {'status': False, 'info': F_ERROR_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # *** 请求处理 ***
+    if _type == 'T':
+        try:
+            teacher = Teacher.objects.get(teacher_id=_teacher_id)
+            response = {
+                'status': True,
+                'info': S_QUERY_SUCCEED,
+                'picture': teacher.picture,
+            }
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+        except Teacher.DoesNotExist:
+            response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+    elif _type == 'S':
+        try:
+            student = Student.objects.get(student_id=_student_id)
+            response = {
+                'status': True,
+                'info': S_QUERY_SUCCEED,
+                'picture': student.picture,
+            }
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+        except Student.DoesNotExist:
+            response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+    else:
+        user = request.user
+        try:
+            teacher = Teacher.objects.get(user=user)
+            response = {
+                'status': True,
+                'info': S_QUERY_SUCCEED,
+                'picture': teacher.picture,
+            }
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+        except Teacher.DoesNotExist:
+            pass
+        try:
+            student = Student.objects.get(user=user)
+            response = {
+                'status': True,
+                'info': S_QUERY_SUCCEED,
+                'picture': student.picture,
+            }
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+        except Student.DoesNotExist:
+            pass
+        response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 # TODO
 @ post_required
+@ login_required
 def update_info_picture(request):
     response = None
     return HttpResponse(json.dumps(response, ensure_ascii=False))
