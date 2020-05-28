@@ -10,10 +10,10 @@ class Message(models.Model):
     MESSAGE_TYPE_CHOICES = [('T', 'txt'), ('P', 'picture')]
 
     message_id = models.AutoField(primary_key=True)             # 消息 ID
-    owner_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='p_message')   # 所属老师
-    owner_student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='p_message')   # 所属学生
-    object_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='n_message')  # 对象老师
-    object_student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='n_message')  # 对象学生
+    owner_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='p_messages')   # 所属老师
+    owner_student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='p_messages')   # 所属学生
+    object_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='n_messages')  # 对象老师
+    object_student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='n_messages')  # 对象学生
 
     owner_type = models.CharField(                              # 所有者类型
         max_length=1, choices=OWNER_TYPE_CHOICES, null=False)

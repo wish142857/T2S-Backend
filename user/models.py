@@ -8,6 +8,7 @@ class Teacher(models.Model):
 
     teacher_id = models.AutoField(primary_key=True)                                 # 导师 ID
     user = models.OneToOneField(User, on_delete=models.CASCADE)                     # 用户账户
+    follows = models.ManyToManyField(User, related_name='teacher_fans')             # 关注关系
 
     account = models.CharField(max_length=32, null=False, unique=True)              # 账号
     password = models.CharField(max_length=32, null=False)                          # 密码
@@ -36,7 +37,7 @@ class Student(models.Model):
 
     student_id = models.AutoField(primary_key=True)                                 # 学生 ID
     user = models.OneToOneField(User, on_delete=models.CASCADE)                     # 用户账户
-    follow = models.ManyToManyField(Teacher)                                        # 关注关系
+    follows = models.ManyToManyField(User, related_name='student_fans')             # 关注关系
 
     account = models.CharField(max_length=32, null=False, unique=True)              # 账号
     password = models.CharField(max_length=32, null=False)                          # 密码
