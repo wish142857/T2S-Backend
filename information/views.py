@@ -68,7 +68,7 @@ def get_information_detail(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     except (Student.DoesNotExist, Information.DoesNotExist):
         pass
-    response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+    response = {'status': False, 'info': F_ERROR_NOT_FOUND}
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
