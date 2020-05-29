@@ -3,22 +3,29 @@
 """
 
 
-def check_none(*args):
+def check_necessary(*args):
     for a in args:
         if a is None:
             return False
     return True
 
 
-def check_empty(*args):
+def check_optional(*args):
     for a in args:
-        if len(a) == 0:
+        if a is not None:
+            return True
+    return False
+
+
+def check_nonempty(*args):
+    for a in args:
+        if a is not None and len(a) == 0:
             return False
     return True
 
 
-def check_enum(arg, choices):
-    if arg not in choices:
+def check_enumeration(arg, choices):
+    if arg is not None and arg not in choices:
         return False
     return True
 

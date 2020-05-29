@@ -24,10 +24,10 @@ def logon(request):
     _password = request.POST.get('password')
     _name = request.POST.get('name')
     # *** 合法性检测 ***
-    if not check_none(_type, _account, _password, _name):
+    if not check_necessary(_type, _account, _password, _name):
         response = {'status': False, 'info': F_MISSING_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
-    if not check_empty(_account, _name) or not check_enum(_type, ('T', 'S')):
+    if not check_nonempty(_account, _name) or not check_enumeration(_type, ('T', 'S')):
         response = {'status': False, 'info': F_ERROR_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
@@ -54,10 +54,10 @@ def login(request):
     _account = request.POST.get('account')
     _password = request.POST.get('password')
     # *** 合法性检测 ***
-    if not check_none(_type, _account, _password):
+    if not check_necessary(_type, _account, _password):
         response = {'status': False, 'info': F_MISSING_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
-    if not check_empty(_account) or not check_enum(_type, ('T', 'S')):
+    if not check_nonempty(_account) or not check_enumeration(_type, ('T', 'S')):
         response = {'status': False, 'info': F_ERROR_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
@@ -97,10 +97,10 @@ def user_auth(request):
     _student_number = request.POST.get('student_number')
     _id_number = request.POST.get('id_number')
     # *** 合法性检测 ***
-    if not check_none(_type, _id_number):
+    if not check_necessary(_type, _id_number) or not check_optional(_teacher_number, _student_number):
         response = {'status': False, 'info': F_MISSING_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
-    if (not check_enum(_type, ('T', 'S'))) or (_type == 'T' and not check_none(_teacher_number)) or (_type == 'S' and not check_none(_student_number)):
+    if not check_enumeration(_type, ('T', 'S')):
         response = {'status': False, 'info': F_ERROR_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
@@ -142,11 +142,8 @@ def change_password(request):
     _old_password = request.POST.get('old_password')
     _new_password = request.POST.get('new_password')
     # *** 合法性检测 ***
-    if not check_none(_old_password, _new_password):
+    if not check_necessary(_old_password, _new_password):
         response = {'status': False, 'info': F_MISSING_PARAMETER}
-        return HttpResponse(json.dumps(response, ensure_ascii=False))
-    if not check_empty(_old_password, _new_password):
-        response = {'status': False, 'info': F_ERROR_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
     user = request.user
@@ -190,11 +187,14 @@ def get_info(request):
     _teacher_id = request.GET.get('teacher_id')
     _student_id = request.GET.get('student_id')
     # *** 合法性检测 ***
-    if not check_none(_type):
+    if not check_necessary(_type):
         response = {'status': False, 'info': F_MISSING_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
-    if (not check_enum(_type, ('T', 'S', 'I'))) or (_type == 'T' and not check_none(_teacher_id)) or (_type == 'S' and not check_none(_student_id)):
+    if not check_enumeration(_type, ('T', 'S', 'I')):
         response = {'status': False, 'info': F_ERROR_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    if (_type == 'T' and _teacher_id is None) or (_type == 'S' and _student_id is None):
+        response = {'status': False, 'info': F_MISSING_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
     if _type == 'T':
@@ -382,11 +382,14 @@ def get_info_plus(request):
     _teacher_id = request.GET.get('teacher_id')
     _student_id = request.GET.get('student_id')
     # *** 合法性检测 ***
-    if not check_none(_type):
+    if not check_necessary(_type):
         response = {'status': False, 'info': F_MISSING_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
-    if (not check_enum(_type, ('T', 'S', 'I'))) or (_type == 'T' and not check_none(_teacher_id)) or (_type == 'S' and not check_none(_student_id)):
+    if not check_enumeration(_type, ('T', 'S', 'I')):
         response = {'status': False, 'info': F_ERROR_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    if (_type == 'T' and _teacher_id is None) or (_type == 'S' and _student_id is None):
+        response = {'status': False, 'info': F_MISSING_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
     if _type == 'T':
@@ -491,11 +494,14 @@ def get_info_picture(request):
     _teacher_id = request.GET.get('teacher_id')
     _student_id = request.GET.get('student_id')
     # *** 合法性检测 ***
-    if not check_none(_type):
+    if not check_necessary(_type):
         response = {'status': False, 'info': F_MISSING_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
-    if (not check_enum(_type, ('T', 'S', 'I'))) or (_type == 'T' and not check_none(_teacher_id)) or (_type == 'S' and not check_none(_student_id)):
+    if not check_enumeration(_type, ('T', 'S', 'I')):
         response = {'status': False, 'info': F_ERROR_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    if (_type == 'T' and _teacher_id is None) or (_type == 'S' and _student_id is None):
+        response = {'status': False, 'info': F_MISSING_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
     if _type == 'T':

@@ -9,6 +9,8 @@ S_LOGOUT_SUCCEED = '[成功] 注销成功！'
 S_AUTH_SUCCEED = '[成功] 认证成功！'
 S_CHANGE_PASSWORD_SUCCEED = '[成功] 修改密码成功！'
 S_QUERY_SUCCEED = '[成功] 查询成功！'
+S_CREATE_SUCCEED = '[成功] 创建成功！'
+S_DELETE_SUCCEED = '[成功] 删除成功！'
 S_UPDATE_SUCCEED = '[成功] 修改成功！'
 
 
@@ -20,3 +22,7 @@ F_DUPLICATE_USERNAME = '[失败] 重复用户名！'
 F_ERROR_PASSWORD = '[失败] 错误密码！'
 F_ERROR_USERNAME_OR_PASSWORD = '[失败] 错误用户名或密码！'
 F_AUTH_FAIL = '[失败] 认证失败！'
+F_CREATE_FAIL = '[失败] 创建失败！'
+F_DELETE_FAIL = '[失败] 删除失败！'
+F_UPDATE_FAIL = '[失败] 修改失败！'
+
