@@ -69,12 +69,110 @@ def get_fanlist(request):
 @ post_required
 @ login_required
 def add_to_watch(request):
-    # TODO
-    pass
+    # *** 参数获取 ***
+    _teacher_id = request.POST.get('teacher_id')
+    _student_id = request.POST.get('student_id')
+    # *** 合法性检测 ***
+    if not check_optional(_teacher_id, _student_id):
+        response = {'status': False, 'info': F_MISSING_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # *** 请求处理 ***
+    user = request.user
+    try:
+        teacher = Teacher.objects.get(user=user)
+        if _teacher_id is not None:
+            try:
+                u = Teacher.objects.get(teacher_id=_teacher_id).user
+                teacher.follows.add(u)
+            except Teacher.DoesNotExist:
+                response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+                return HttpResponse(json.dumps(response, ensure_ascii=False))
+        if _student_id is not None:
+            try:
+                u = Student.objects.get(sudent_id=_student_id).user
+                teacher.follows.add(u)
+            except Student.DoesNotExist:
+                response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+                return HttpResponse(json.dumps(response, ensure_ascii=False))
+        response = {'status': True, 'info': S_CREATE_SUCCEED}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    except Teacher.DoesNotExist:
+        pass
+    try:
+        student = Student.objects.get(user=user)
+        if _teacher_id is not None:
+            try:
+                u = Teacher.objects.get(teacher_id=_teacher_id).user
+                student.follows.add(u)
+            except Teacher.DoesNotExist:
+                response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+                return HttpResponse(json.dumps(response, ensure_ascii=False))
+        if _student_id is not None:
+            try:
+                u = Student.objects.get(sudent_id=_student_id).user
+                student.follows.add(u)
+            except Student.DoesNotExist:
+                response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+                return HttpResponse(json.dumps(response, ensure_ascii=False))
+        response = {'status': True, 'info': S_CREATE_SUCCEED}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    except Student.DoesNotExist:
+        pass
+    response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+    return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
 @ post_required
 @ login_required
 def delete_from_watch(request):
-    # TODO
-    pass
+    # *** 参数获取 ***
+    _teacher_id = request.POST.get('teacher_id')
+    _student_id = request.POST.get('student_id')
+    # *** 合法性检测 ***
+    if not check_optional(_teacher_id, _student_id):
+        response = {'status': False, 'info': F_MISSING_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # *** 请求处理 ***
+    user = request.user
+    try:
+        teacher = Teacher.objects.get(user=user)
+        if _teacher_id is not None:
+            try:
+                u = Teacher.objects.get(teacher_id=_teacher_id).user
+                teacher.follows.remove(u)
+            except Teacher.DoesNotExist:
+                response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+                return HttpResponse(json.dumps(response, ensure_ascii=False))
+        if _student_id is not None:
+            try:
+                u = Student.objects.get(sudent_id=_student_id).user
+                teacher.follows.remove(u)
+            except Student.DoesNotExist:
+                response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+                return HttpResponse(json.dumps(response, ensure_ascii=False))
+        response = {'status': True, 'info': S_DELETE_SUCCEED}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    except Teacher.DoesNotExist:
+        pass
+    try:
+        student = Student.objects.get(user=user)
+        if _teacher_id is not None:
+            try:
+                u = Teacher.objects.get(teacher_id=_teacher_id).user
+                student.follows.remove(u)
+            except Teacher.DoesNotExist:
+                response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+                return HttpResponse(json.dumps(response, ensure_ascii=False))
+        if _student_id is not None:
+            try:
+                u = Student.objects.get(sudent_id=_student_id).user
+                student.follows.remove(u)
+            except Student.DoesNotExist:
+                response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+                return HttpResponse(json.dumps(response, ensure_ascii=False))
+        response = {'status': True, 'info': S_DELETE_SUCCEED}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    except Student.DoesNotExist:
+        pass
+    response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+    return HttpResponse(json.dumps(response, ensure_ascii=False))
