@@ -3,7 +3,6 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.http import HttpResponse
-from django.shortcuts import render
 from T2S_Backend.decorators import *
 from T2S_Backend.globals import *
 from T2S_Backend.utils import *
