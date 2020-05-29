@@ -12,7 +12,7 @@ S_QUERY_SUCCEED = '[成功] 查询成功！'
 S_CREATE_SUCCEED = '[成功] 创建成功！'
 S_DELETE_SUCCEED = '[成功] 删除成功！'
 S_UPDATE_SUCCEED = '[成功] 修改成功！'
-
+S_SEND_SUCCEED = '[成功] 发送成功！'
 
 F_INTERNAL_ERROR = '[失败] 内部错误！'
 F_MISSING_PARAMETER = '[失败] 缺少必要参数！'
