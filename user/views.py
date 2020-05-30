@@ -9,12 +9,6 @@ from T2S_Backend.utils import *
 from user.models import Teacher, Student
 
 
-def hello(request):
-    a = {'a': 1, 'b': 2}
-    b = json.dumps(a, ensure_ascii=False)
-    return HttpResponse(b)
-
-
 @ post_required
 def logon(request):
     # *** 参数获取 ***
@@ -313,6 +307,13 @@ def update_info(request):
     _email = request.POST.get('email')
     _homepage = request.POST.get('homepage')
     _address = request.POST.get('address')
+    # *** 合法性检测 ***
+    if not check_optional(_name, _gender, _signature, _school, _department, _title, _major, _phone, _email, _homepage, _address):
+        response = {'status': False, 'info': F_MISSING_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    if not check_enumeration(_gender, ('M', 'F', 'U')):
+        response = {'status': False, 'info': F_ERROR_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
     user = request.user
     try:
@@ -455,6 +456,10 @@ def update_info_plus(request):
     _research_fields = request.POST.get('research_fields')
     _research_achievements = request.POST.get('research_achievements')
     _research_experience = request.POST.get('research_experience')
+    # *** 合法性检测 ***
+    if not check_optional(_introduction, _research_fields, _research_achievements, _research_experience):
+        response = {'status': False, 'info': F_MISSING_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
     user = request.user
     try:
@@ -506,49 +511,37 @@ def get_info_picture(request):
     if _type == 'T':
         try:
             teacher = Teacher.objects.get(teacher_id=_teacher_id)
-            response = {
-                'status': True,
-                'info': S_QUERY_SUCCEED,
-                'picture': teacher.picture,
-            }
-            return HttpResponse(json.dumps(response, ensure_ascii=False))
+            return HttpResponse(teacher.picture.file, content_type='image/jpeg')
         except Teacher.DoesNotExist:
             response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
             return HttpResponse(json.dumps(response, ensure_ascii=False))
+        except ValueError:
+            return HttpResponse(None, content_type='image/jpeg')
     elif _type == 'S':
         try:
             student = Student.objects.get(student_id=_student_id)
-            response = {
-                'status': True,
-                'info': S_QUERY_SUCCEED,
-                'picture': student.picture,
-            }
-            return HttpResponse(json.dumps(response, ensure_ascii=False))
+            return HttpResponse(student.picture.file, content_type='image/jpeg')
         except Student.DoesNotExist:
             response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
             return HttpResponse(json.dumps(response, ensure_ascii=False))
+        except ValueError:
+            return HttpResponse(None, content_type='image/jpeg')
     else:
         user = request.user
         try:
             teacher = Teacher.objects.get(user=user)
-            response = {
-                'status': True,
-                'info': S_QUERY_SUCCEED,
-                'picture': teacher.picture,
-            }
-            return HttpResponse(json.dumps(response, ensure_ascii=False))
+            return HttpResponse(teacher.picture.file, content_type='image/jpeg')
         except Teacher.DoesNotExist:
             pass
+        except ValueError:
+            return HttpResponse(None, content_type='image/jpeg')
         try:
             student = Student.objects.get(user=user)
-            response = {
-                'status': True,
-                'info': S_QUERY_SUCCEED,
-                'picture': student.picture,
-            }
-            return HttpResponse(json.dumps(response, ensure_ascii=False))
+            return HttpResponse(student.picture.file, content_type='image/jpeg')
         except Student.DoesNotExist:
             pass
+        except ValueError:
+            return HttpResponse(None, content_type='image/jpeg')
         response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
@@ -557,7 +550,7 @@ def get_info_picture(request):
 @ login_required
 def update_info_picture(request):
     # *** 参数获取 ***
-    _picture = request.POST.get('picture')
+    _picture = request.FILES.get('picture')
     # *** 请求处理 ***
     user = request.user
     try:
