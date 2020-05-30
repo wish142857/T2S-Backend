@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7d6e89dd-d3c2-47ea-91e0-8519c37521f2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/test.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/T2S_Backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/T2S_Backend/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conversation/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/conversation/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/T2S_Backend/globals.py" beforeDir="false" afterPath="$PROJECT_DIR$/T2S_Backend/globals.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/intention/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/intention/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -118,7 +115,7 @@
       <workItem from="1590718614039" duration="29590000" />
       <workItem from="1590766573780" duration="78000" />
       <workItem from="1590808516854" duration="4000" />
-      <workItem from="1590847401443" duration="5320000" />
+      <workItem from="1590847401443" duration="6783000" />
     </task>
     <servers />
   </component>

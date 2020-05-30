@@ -28,7 +28,7 @@ def get_recruit_intention(request):
 @ get_required
 def get_recruit_intention_detail(request):
     # *** 参数获取 ***
-    _recruitment_id = request.GET.get('_recruitment_id')
+    _recruitment_id = request.GET.get('recruitment_id')
     # *** 合法性检测 ***
     if not check_necessary(_recruitment_id):
         response = {'status': False, 'info': F_MISSING_PARAMETER}
@@ -82,7 +82,7 @@ def create_recruit_intention(request):
         response = {'status': True, 'info': S_CREATE_SUCCEED}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     except Teacher.DoesNotExist:
-        response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+        response = {'status': False, 'info': F_CREATE_FAIL}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
@@ -191,6 +191,7 @@ def get_apply_intention_detail(request):
 
 
 @ post_required
+@ login_required
 def create_apply_intention(request):
     # *** 参数获取 ***
     _research_interests = request.POST.get('research_interests')
@@ -216,11 +217,12 @@ def create_apply_intention(request):
         response = {'status': True, 'info': S_CREATE_SUCCEED}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     except Student.DoesNotExist:
-        response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+        response = {'status': False, 'info': F_CREATE_FAIL}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
 @ post_required
+@ login_required
 def delete_apply_intention(request):
     # *** 参数获取 ***
     _application_id = request.POST.get('application_id')
@@ -241,6 +243,7 @@ def delete_apply_intention(request):
 
 
 @ post_required
+@ login_required
 def update_apply_intention(request):
     # *** 参数获取 ***
     _application_id = request.POST.get('application_id')
