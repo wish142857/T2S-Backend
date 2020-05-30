@@ -46,11 +46,15 @@ def get_information_detail(request):
         response = {
             'status': True,
             'info': S_QUERY_SUCCEED,
-            'information_time': information.information_time,
+            'information_time': information.information_time.strftime('%Y-%m-%d %H:%M'),
             'information_type': information.information_type,
-            'information_content': information.information_content,
+            'information_content': None,
             'information_state': information.information_state,
         }
+        if information.information_type == 'T':
+            response['information_content'] = str(information.information_content, encoding="utf-8")
+        elif information.information_type == 'P':
+            response['information_content'] = information.information_content
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     except (Teacher.DoesNotExist, Information.DoesNotExist):
         pass
@@ -60,11 +64,15 @@ def get_information_detail(request):
         response = {
             'status': True,
             'info': S_QUERY_SUCCEED,
-            'information_time': information.information_time,
+            'information_time': information.information_time.strftime('%Y-%m-%d %H:%M'),
             'information_type': information.information_type,
-            'information_content': information.information_content,
+            'information_content': None,
             'information_state': information.information_state,
         }
+        if information.information_type == 'T':
+            response['information_content'] = str(information.information_content, encoding="utf-8")
+        elif information.information_type == 'P':
+            response['information_content'] = information.information_content
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     except (Student.DoesNotExist, Information.DoesNotExist):
         pass
@@ -105,7 +113,7 @@ def set_information_state(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     except (Student.DoesNotExist, Information.DoesNotExist):
         pass
-    response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+    response = {'status': False, 'info': F_ERROR_NOT_FOUND}
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
@@ -124,6 +132,9 @@ def create_information(request):
     if not check_enumeration(_receiver_type, ('T', 'S')) or not check_enumeration(_information_type, ('T', 'P')) or not check_enumeration(_information_state, ('N', 'R', 'H')):
         response = {'status': False, 'info': F_ERROR_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # *** 数据处理 ***
+    if _information_type == 'T':
+        _information_content = bytes(_information_content, encoding="utf8")
     # *** 请求处理 ***
     if _receiver_type == 'T':
         try:
@@ -172,35 +183,4 @@ def delete_information(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     except Information.DoesNotExist:
         response = {'status': False, 'info': F_DELETE_FAIL}
-        return HttpResponse(json.dumps(response, ensure_ascii=False))
-
-
-@ post_required
-def update_information(request):
-    # *** 参数获取 ***
-    _information_id = request.POST.get('information_id')
-    _information_type = request.POST.get('information_type')
-    _information_content = request.POST.get('information_content')
-    _information_state = request.POST.get('information_state')
-    # *** 合法性检测 ***
-    if not check_necessary(_information_id) or not check_optional(_information_type, _information_content, _information_state):
-        response = {'status': False, 'info': F_MISSING_PARAMETER}
-        return HttpResponse(json.dumps(response, ensure_ascii=False))
-    if not check_enumeration(_information_type, ('T', 'P')) or not check_enumeration(_information_state, ('N', 'R', 'H')):
-        response = {'status': False, 'info': F_ERROR_PARAMETER}
-        return HttpResponse(json.dumps(response, ensure_ascii=False))
-    # *** 请求处理 ***
-    try:
-        information = Information.objects.get(information_id=_information_id)
-        if _information_type is not None:
-            information.information_type = _information_type
-        if _information_content is not None:
-            information.information_content = _information_content
-        if _information_state is not None:
-            information._information_state = _information_state
-        information.save()
-        response = {'status': True, 'info': S_UPDATE_SUCCEED}
-        return HttpResponse(json.dumps(response, ensure_ascii=False))
-    except Information.DoesNotExist:
-        response = {'status': False, 'info': F_UPDATE_FAIL}
         return HttpResponse(json.dumps(response, ensure_ascii=False))

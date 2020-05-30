@@ -114,7 +114,7 @@ def get_message_detail(request):
                 'message_way': 'S',
                 'message_type': message.message_type,
                 'message_content': message.message_content,
-                'message_time': message.message_time,
+                'message_time': message.message_time.strftime('%Y-%m-%d %H:%M'),
             }
             return HttpResponse(json.dumps(response, ensure_ascii=False))
         if message.receiver_teacher == teacher:
@@ -124,7 +124,7 @@ def get_message_detail(request):
                 'message_way': 'R',
                 'message_type': message.message_type,
                 'message_content': message.message_content,
-                'message_time': message.message_time,
+                'message_time': message.message_time.strftime('%Y-%m-%d %H:%M'),
             }
             return HttpResponse(json.dumps(response, ensure_ascii=False))
     except Teacher.DoesNotExist:

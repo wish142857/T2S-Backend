@@ -8,8 +8,8 @@ class Information(models.Model):
     INFORMATION_STATE_CHOICES = [('N', 'new'), ('R', 'read'), ('H', 'hide')]
 
     information_id = models.AutoField(primary_key=True)         # 信息 ID
-    receiver_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)  # 接收老师
-    receiver_student = models.ForeignKey(Student, on_delete=models.CASCADE)  # 接收学生
+    receiver_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True)  # 接收老师
+    receiver_student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True)  # 接收学生
 
     receiver_type = models.CharField(                           # 接受者类型
         max_length=1, choices=RECEIVER_TYPE_CHOICES, null=False)
