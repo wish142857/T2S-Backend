@@ -80,7 +80,7 @@ def add_to_watch(request):
     user = request.user
     try:
         teacher = Teacher.objects.get(user=user)
-        if _teacher_id is not None:
+        if (_teacher_id is not None) and (not teacher.teacher_id.__eq__(_teacher_id)):
             try:
                 u = Teacher.objects.get(teacher_id=_teacher_id).user
                 teacher.follows.add(u)
@@ -89,7 +89,7 @@ def add_to_watch(request):
                 return HttpResponse(json.dumps(response, ensure_ascii=False))
         if _student_id is not None:
             try:
-                u = Student.objects.get(sudent_id=_student_id).user
+                u = Student.objects.get(student_id=_student_id).user
                 teacher.follows.add(u)
             except Student.DoesNotExist:
                 response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
@@ -107,9 +107,9 @@ def add_to_watch(request):
             except Teacher.DoesNotExist:
                 response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
                 return HttpResponse(json.dumps(response, ensure_ascii=False))
-        if _student_id is not None:
+        if (_student_id is not None) and (not student.student_id.__eq__(_student_id)):
             try:
-                u = Student.objects.get(sudent_id=_student_id).user
+                u = Student.objects.get(student_id=_student_id).user
                 student.follows.add(u)
             except Student.DoesNotExist:
                 response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
@@ -145,7 +145,7 @@ def delete_from_watch(request):
                 return HttpResponse(json.dumps(response, ensure_ascii=False))
         if _student_id is not None:
             try:
-                u = Student.objects.get(sudent_id=_student_id).user
+                u = Student.objects.get(student_id=_student_id).user
                 teacher.follows.remove(u)
             except Student.DoesNotExist:
                 response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
@@ -165,7 +165,7 @@ def delete_from_watch(request):
                 return HttpResponse(json.dumps(response, ensure_ascii=False))
         if _student_id is not None:
             try:
-                u = Student.objects.get(sudent_id=_student_id).user
+                u = Student.objects.get(student_id=_student_id).user
                 student.follows.remove(u)
             except Student.DoesNotExist:
                 response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}

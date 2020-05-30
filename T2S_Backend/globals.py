@@ -26,4 +26,4 @@ F_AUTH_FAIL = '[失败] 认证失败！'
 F_CREATE_FAIL = '[失败] 创建失败！'
 F_DELETE_FAIL = '[失败] 删除失败！'
 F_UPDATE_FAIL = '[失败] 修改失败！'
-
+F_NOT_IMPLEMENTED = '[失败] 功能未实现！'

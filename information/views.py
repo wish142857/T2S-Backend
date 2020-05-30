@@ -132,10 +132,12 @@ def create_information(request):
     if not check_enumeration(_receiver_type, ('T', 'S')) or not check_enumeration(_information_type, ('T', 'P')) or not check_enumeration(_information_state, ('N', 'R', 'H')):
         response = {'status': False, 'info': F_ERROR_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
-    # *** 数据处理 ***
+    # *** 请求处理 ***
     if _information_type == 'T':
         _information_content = bytes(_information_content, encoding="utf8")
-    # *** 请求处理 ***
+    if _information_content == 'P':
+        response = {'status': False, 'info': F_NOT_IMPLEMENTED}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
     if _receiver_type == 'T':
         try:
             teacher = Teacher.objects.get(teacher_id=_receiver_id)
