@@ -2,6 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+def custom_upload_path(instance, filename):
+    class_name = instance.__class__.__name__.lower()
+    return "picture/{}/{}-{}/{}".format(class_name+"s", class_name, instance.pk, filename)
+
+
 class Teacher(models.Model):
     GENDER_CHOICES = [('M', 'male'), ('F', 'female'), ('U', 'unknown')]
     AUTH_STATE_CHOICES = [('UQ', 'unqualified'), ('QD', 'qualified')]
@@ -14,7 +19,7 @@ class Teacher(models.Model):
     password = models.CharField(max_length=32, null=False)                          # 密码
     name = models.CharField(max_length=16, null=False)                              # 名称
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='U')    # 性别
-    picture = models.ImageField()                                                   # 头像
+    picture = models.ImageField(upload_to=custom_upload_path)                       # 头像
     signature = models.CharField(max_length=1024)                                   # 签名
     school = models.CharField(max_length=32)                                        # 学校
     department = models.CharField(max_length=32)                                    # 院系
@@ -43,7 +48,7 @@ class Student(models.Model):
     password = models.CharField(max_length=32, null=False)                          # 密码
     name = models.CharField(max_length=16, null=False)                              # 名称
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='U')    # 性别
-    picture = models.ImageField()                                                   # 头像
+    picture = models.ImageField(upload_to=custom_upload_path)                       # 头像
     signature = models.CharField(max_length=1024)                                   # 签名
     school = models.CharField(max_length=32)                                        # 学校
     department = models.CharField(max_length=32)                                    # 院系
