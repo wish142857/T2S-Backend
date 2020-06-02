@@ -10,6 +10,7 @@ def custom_upload_path(instance, filename):
 class Teacher(models.Model):
     GENDER_CHOICES = [('M', 'male'), ('F', 'female'), ('U', 'unknown')]
     AUTH_STATE_CHOICES = [('UQ', 'unqualified'), ('QD', 'qualified')]
+    TITLE_CHOICES = [('TA', 'assistant'), ('LT', 'lecturer'), ('AP', 'associate professor'), ('PP', 'professor')]
 
     teacher_id = models.AutoField(primary_key=True)                                 # 导师 ID
     user = models.OneToOneField(User, on_delete=models.CASCADE)                     # 用户账户
@@ -23,10 +24,11 @@ class Teacher(models.Model):
     signature = models.CharField(max_length=1024)                                   # 签名
     school = models.CharField(max_length=32)                                        # 学校
     department = models.CharField(max_length=32)                                    # 院系
-    title = models.CharField(max_length=32)                                         # 职务
+    title = models.CharField(max_length=2, choices=TITLE_CHOICES, default='TA')     # 职务
     introduction = models.CharField(max_length=51200)                               # 个人介绍
     research_fields = models.CharField(max_length=51200)                            # 研究方向
     research_achievements = models.CharField(max_length=51200)                      # 研究成果
+    promotional_video_url = models.CharField(max_length=1024)                       # 宣传视频 URL
     phone = models.CharField(max_length=64)                                         # 电话
     email = models.CharField(max_length=64)                                         # 邮箱
     homepage = models.CharField(max_length=128)                                     # 主页
@@ -39,6 +41,7 @@ class Teacher(models.Model):
 class Student(models.Model):
     GENDER_CHOICES = [('M', 'male'), ('F', 'female'), ('U', 'unknown')]
     AUTH_STATE_CHOICES = [('UQ', 'unqualified'), ('QD', 'qualified')]
+    DEGREE_CHOICES = [('UG', 'undergraduate'), ('MT', 'master'), ('DT', 'doctor')]
 
     student_id = models.AutoField(primary_key=True)                                 # 学生 ID
     user = models.OneToOneField(User, on_delete=models.CASCADE)                     # 用户账户
@@ -53,8 +56,10 @@ class Student(models.Model):
     school = models.CharField(max_length=32)                                        # 学校
     department = models.CharField(max_length=32)                                    # 院系
     major = models.CharField(max_length=32)                                         # 专业
+    degree = models.CharField(max_length=2, choices=DEGREE_CHOICES, default='UG')   # 学位
     introduction = models.CharField(max_length=51200)                               # 个人介绍
     research_experience = models.CharField(max_length=51200)                        # 研究经历
+    promotional_video_url = models.CharField(max_length=1024)                       # 宣传视频 URL
     phone = models.CharField(max_length=64)                                         # 电话
     email = models.CharField(max_length=64)                                         # 邮箱
     homepage = models.CharField(max_length=128)                                     # 主页

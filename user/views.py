@@ -228,6 +228,7 @@ def get_info(request):
                 'school': student.school,
                 'department': student.department,
                 'major': student.major,
+                'degree': student.degree,
                 'phone': student.phone,
                 'email': student.email,
                 'homepage': student.homepage,
@@ -277,6 +278,7 @@ def get_info(request):
                 'school': student.school,
                 'department': student.department,
                 'major': student.major,
+                'degree': student.degree,
                 'phone': student.phone,
                 'email': student.email,
                 'homepage': student.homepage,
@@ -303,15 +305,16 @@ def update_info(request):
     _department = request.POST.get('department')
     _title = request.POST.get('title')
     _major = request.POST.get('major')
+    _degree = request.POST.get('degree')
     _phone = request.POST.get('phone')
     _email = request.POST.get('email')
     _homepage = request.POST.get('homepage')
     _address = request.POST.get('address')
     # *** 合法性检测 ***
-    if not check_optional(_name, _gender, _signature, _school, _department, _title, _major, _phone, _email, _homepage, _address):
+    if not check_optional(_name, _gender, _signature, _school, _department, _title, _major, _degree, _phone, _email, _homepage, _address):
         response = {'status': False, 'info': F_MISSING_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
-    if not check_enumeration(_gender, ('M', 'F', 'U')):
+    if not check_enumeration(_gender, ('M', 'F', 'U')) or not check_enumeration(_title, ('TA', 'LT', 'AP', 'PP')) or not check_enumeration(_degree, ('UG', 'MT', 'DT')):
         response = {'status': False, 'info': F_ERROR_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
@@ -320,7 +323,7 @@ def update_info(request):
         teacher = Teacher.objects.get(user=user)
         if _name is not None:
             teacher.name = _name
-        if _gender is not None and _gender in ('M', 'F', 'U'):
+        if _gender is not None:
             teacher.gender = _gender
         if _signature is not None:
             teacher.signature = _signature
@@ -357,6 +360,8 @@ def update_info(request):
             student.department = _department
         if _major is not None:
             student.major = _major
+        if _degree is not None:
+            student.degree = _degree
         if _phone is not None:
             student.phone = _phone
         if _email is not None:
@@ -401,6 +406,7 @@ def get_info_plus(request):
                 'introduction': teacher.introduction,
                 'research_fields': teacher.research_fields,
                 'research_achievements': teacher.research_achievements,
+                'promotional_video_url': teacher.promotional_video_url,
             }
             return HttpResponse(json.dumps(response, ensure_ascii=False))
         except Teacher.DoesNotExist:
@@ -414,6 +420,7 @@ def get_info_plus(request):
                 'info': S_QUERY_SUCCEED,
                 'introduction': student.introduction,
                 'research_experience': student.research_experience,
+                'promotional_video_url': student.promotional_video_url,
             }
             return HttpResponse(json.dumps(response, ensure_ascii=False))
         except Student.DoesNotExist:
@@ -429,6 +436,7 @@ def get_info_plus(request):
                 'introduction': teacher.introduction,
                 'research_fields': teacher.research_fields,
                 'research_achievements': teacher.research_achievements,
+                'promotional_video_url': teacher.promotional_video_url,
             }
             return HttpResponse(json.dumps(response, ensure_ascii=False))
         except Teacher.DoesNotExist:
@@ -440,6 +448,7 @@ def get_info_plus(request):
                 'info': S_QUERY_SUCCEED,
                 'introduction': student.introduction,
                 'research_experience': student.research_experience,
+                'promotional_video_url': student.promotional_video_url,
             }
             return HttpResponse(json.dumps(response, ensure_ascii=False))
         except Student.DoesNotExist:
@@ -456,8 +465,9 @@ def update_info_plus(request):
     _research_fields = request.POST.get('research_fields')
     _research_achievements = request.POST.get('research_achievements')
     _research_experience = request.POST.get('research_experience')
+    _promotional_video_url = request.POST.get('promotional_video_url')
     # *** 合法性检测 ***
-    if not check_optional(_introduction, _research_fields, _research_achievements, _research_experience):
+    if not check_optional(_introduction, _research_fields, _research_achievements, _research_experience, _promotional_video_url):
         response = {'status': False, 'info': F_MISSING_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
@@ -470,6 +480,8 @@ def update_info_plus(request):
             teacher.research_fields = _research_fields
         if _research_achievements is not None:
             teacher.research_achievements = _research_achievements
+        if _promotional_video_url is not None:
+            teacher.promotional_video_url = _promotional_video_url
         teacher.save()
         response = {'status': True, 'info': S_UPDATE_SUCCEED}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
@@ -481,6 +493,8 @@ def update_info_plus(request):
             student.introduction = _introduction
         if _research_experience is not None:
             student.research_experience = _research_experience
+        if _promotional_video_url is not None:
+            student.promotional_video_url = _promotional_video_url
         student.save()
         response = {'status': True, 'info': S_UPDATE_SUCCEED}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
