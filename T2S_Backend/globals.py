@@ -2,6 +2,7 @@
 全局变量
 """
 
+N_RECOMMEND_RANDOM_NUMBER = 2
 
 S_LOGON_SUCCEED = '[成功] 注册成功！'
 S_LOGIN_SUCCEED = '[成功] 登录成功！'
@@ -13,6 +14,8 @@ S_CREATE_SUCCEED = '[成功] 创建成功！'
 S_DELETE_SUCCEED = '[成功] 删除成功！'
 S_UPDATE_SUCCEED = '[成功] 修改成功！'
 S_SEND_SUCCEED = '[成功] 发送成功！'
+S_SEARCH_SUCCEED = '[成功] 搜索成功！'
+S_RECOMMEND_SUCCEED = '[成功] 推荐成功！'
 
 F_INTERNAL_ERROR = '[失败] 内部错误！'
 F_MISSING_PARAMETER = '[失败] 缺少必要参数！'

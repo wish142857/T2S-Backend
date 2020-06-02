@@ -25,7 +25,7 @@ def search_teacher(request):
         Q(school__icontains=_key) | Q(department__icontains=_key) |
         Q(introduction__icontains=_key) | Q(research_fields__icontains=_key)
     )
-    response = {'status': True, 'info': S_QUERY_SUCCEED, 'teacher_id_list': [t.teacher_id for t in teachers.all()]}
+    response = {'status': True, 'info': S_SEARCH_SUCCEED, 'teacher_id_list': [t.teacher_id for t in teachers.all()]}
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
@@ -46,7 +46,7 @@ def search_student(request):
         Q(school__icontains=_key) | Q(department__icontains=_key) | Q(major__icontains=_key) |
         Q(introduction__icontains=_key) | Q(research_experience__icontains=_key)
     )
-    response = {'status': True, 'info': S_QUERY_SUCCEED, 'student_id_list': [s.student_id for s in students.all()]}
+    response = {'status': True, 'info': S_SEARCH_SUCCEED, 'student_id_list': [s.student_id for s in students.all()]}
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
@@ -65,7 +65,7 @@ def search_recruit_intention(request):
     recruitment = Recruitment.objects.filter(
         Q(research_fields__icontains=_key) | Q(introduction__icontains=_key)
     )
-    response = {'status': True, 'info': S_QUERY_SUCCEED, 'recruitment_id_list': [r.recruitment_id for r in recruitment.all()]}
+    response = {'status': True, 'info': S_SEARCH_SUCCEED, 'recruitment_id_list': [r.recruitment_id for r in recruitment.all()]}
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
@@ -84,5 +84,5 @@ def search_apply_intention(request):
     application = Application.objects.filter(
         Q(research_interests__icontains=_key) | Q(introduction__icontains=_key)
     )
-    response = {'status': True, 'info': S_QUERY_SUCCEED, 'application_id_list': [a.application_id for a in application.all()]}
+    response = {'status': True, 'info': S_SEARCH_SUCCEED, 'application_id_list': [a.application_id for a in application.all()]}
     return HttpResponse(json.dumps(response, ensure_ascii=False))
