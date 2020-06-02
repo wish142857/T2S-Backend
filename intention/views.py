@@ -63,7 +63,7 @@ def get_recruit_intention_picture(request):
     try:
         recruitment = Recruitment.objects.get(recruitment_id=_recruitment_id)
         return HttpResponse(recruitment.intention_picture.file, content_type='image/jpeg')
-    except Recruitment.DoesNotExist:
+    except (Recruitment.DoesNotExist, ValueError):
         return HttpResponse(None, content_type='image/jpeg')
 
 
@@ -159,7 +159,7 @@ def update_recruit_intention(request):
         if _intention_state is not None:
             recruitment.intention_state = _intention_state
         if _intention_picture is not None:
-            recruitment.intent = _intention_picture
+            recruitment.intention_picture = _intention_picture
         recruitment.save()
         response = {'status': True, 'info': S_UPDATE_SUCCEED}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
@@ -223,7 +223,7 @@ def get_apply_intention_picture(request):
     try:
         application = Application.objects.get(application_id=_application_id)
         return HttpResponse(application.intention_picture.file, content_type='image/jpeg')
-    except Application.DoesNotExist:
+    except (Application.DoesNotExist, ValueError):
         return HttpResponse(None, content_type='image/jpeg')
 
 
