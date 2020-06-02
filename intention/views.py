@@ -6,7 +6,7 @@ from user.models import Teacher, Student
 from intention.models import Recruitment, Application
 
 
-@ get_required
+@get_required
 def get_recruit_intention(request):
     # *** 参数获取 ***
     _teacher_id = request.GET.get('teacher_id')
@@ -25,7 +25,7 @@ def get_recruit_intention(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
+@get_required
 def get_recruit_intention_detail(request):
     # *** 参数获取 ***
     _recruitment_id = request.GET.get('recruitment_id')
@@ -51,8 +51,24 @@ def get_recruit_intention_detail(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ post_required
-@ login_required
+@get_required
+def get_recruit_intention_picture(request):
+    # *** 参数获取 ***
+    _recruitment_id = request.GET.get('recruitment_id')
+    # *** 合法性检测 ***
+    if not check_necessary(_recruitment_id):
+        response = {'status': False, 'info': F_MISSING_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # *** 请求处理 ***
+    try:
+        recruitment = Recruitment.objects.get(recruitment_id=_recruitment_id)
+        return HttpResponse(recruitment.intention_picture.file, content_type='image/jpeg')
+    except Recruitment.DoesNotExist:
+        return HttpResponse(None, content_type='image/jpeg')
+
+
+@post_required
+@login_required
 def create_recruit_intention(request):
     # *** 参数获取 ***
     _recruitment_type = request.POST.get('recruitment_type')
@@ -60,6 +76,7 @@ def create_recruit_intention(request):
     _research_fields = request.POST.get('research_fields')
     _introduction = request.POST.get('introduction')
     _intention_state = request.POST.get('intention_state')
+    _intention_picture = request.FILES.get('intention_picture')
     # *** 合法性检测 ***
     if not check_necessary(_recruitment_type, _recruitment_number, _research_fields, _introduction, _intention_state):
         response = {'status': False, 'info': F_MISSING_PARAMETER}
@@ -78,6 +95,7 @@ def create_recruit_intention(request):
             research_fields=_research_fields,
             introduction=_introduction,
             intention_state=_intention_state,
+            intention_picture=_intention_picture,
         )
         response = {'status': True, 'info': S_CREATE_SUCCEED}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
@@ -86,8 +104,8 @@ def create_recruit_intention(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ post_required
-@ login_required
+@post_required
+@login_required
 def delete_recruit_intention(request):
     # *** 参数获取 ***
     _recruitment_id = request.POST.get('recruitment_id')
@@ -107,8 +125,8 @@ def delete_recruit_intention(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ post_required
-@ login_required
+@post_required
+@login_required
 def update_recruit_intention(request):
     # *** 参数获取 ***
     _recruitment_id = request.POST.get('recruitment_id')
@@ -117,8 +135,9 @@ def update_recruit_intention(request):
     _research_fields = request.POST.get('research_fields')
     _introduction = request.POST.get('introduction')
     _intention_state = request.POST.get('intention_state')
+    _intention_picture = request.FILES.get('intention_picture')
     # *** 合法性检测 ***
-    if not check_necessary(_recruitment_id) or not check_optional(_recruitment_type, _recruitment_number, _research_fields, _introduction, _intention_state):
+    if not check_necessary(_recruitment_id) or not check_optional(_recruitment_type, _recruitment_number, _research_fields, _introduction, _intention_state, _intention_picture):
         response = {'status': False, 'info': F_MISSING_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     if not check_enumeration(_recruitment_type, ('UG', 'MT', 'DT')) or not check_enumeration(_intention_state, ('O', 'S', 'F')):
@@ -139,6 +158,8 @@ def update_recruit_intention(request):
             recruitment.introduction = _introduction
         if _intention_state is not None:
             recruitment.intention_state = _intention_state
+        if _intention_picture is not None:
+            recruitment.intent = _intention_picture
         recruitment.save()
         response = {'status': True, 'info': S_UPDATE_SUCCEED}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
@@ -147,7 +168,7 @@ def update_recruit_intention(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
+@get_required
 def get_apply_intention(request):
     # *** 参数获取 ***
     _student_id = request.GET.get('student_id')
@@ -166,7 +187,7 @@ def get_apply_intention(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
+@get_required
 def get_apply_intention_detail(request):
     # *** 参数获取 ***
     _application_id = request.GET.get('application_id')
@@ -190,13 +211,30 @@ def get_apply_intention_detail(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ post_required
-@ login_required
+@get_required
+def get_apply_intention_picture(request):
+    # *** 参数获取 ***
+    _application_id = request.GET.get('application_id')
+    # *** 合法性检测 ***
+    if not check_necessary(_application_id):
+        response = {'status': False, 'info': F_MISSING_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # *** 请求处理 ***
+    try:
+        application = Application.objects.get(application_id=_application_id)
+        return HttpResponse(application.intention_picture.file, content_type='image/jpeg')
+    except Application.DoesNotExist:
+        return HttpResponse(None, content_type='image/jpeg')
+
+
+@post_required
+@login_required
 def create_apply_intention(request):
     # *** 参数获取 ***
     _research_interests = request.POST.get('research_interests')
     _introduction = request.POST.get('introduction')
     _intention_state = request.POST.get('intention_state')
+    _intention_picture = request.FILES.get('intention_picture')
     # *** 合法性检测 ***
     if not check_necessary(_research_interests, _introduction, _intention_state):
         response = {'status': False, 'info': F_MISSING_PARAMETER}
@@ -213,6 +251,7 @@ def create_apply_intention(request):
             research_interests=_research_interests,
             introduction=_introduction,
             intention_state=_intention_state,
+            intention_picture=_intention_picture,
         )
         response = {'status': True, 'info': S_CREATE_SUCCEED}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
@@ -221,8 +260,8 @@ def create_apply_intention(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ post_required
-@ login_required
+@post_required
+@login_required
 def delete_apply_intention(request):
     # *** 参数获取 ***
     _application_id = request.POST.get('application_id')
@@ -242,16 +281,17 @@ def delete_apply_intention(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ post_required
-@ login_required
+@post_required
+@login_required
 def update_apply_intention(request):
     # *** 参数获取 ***
     _application_id = request.POST.get('application_id')
     _research_interests = request.POST.get('research_interests')
     _introduction = request.POST.get('introduction')
     _intention_state = request.POST.get('intention_state')
+    _intention_picture = request.FILES.get('intention_picture')
     # *** 合法性检测 ***
-    if not check_necessary(_application_id) or not check_optional(_research_interests, _introduction, _intention_state):
+    if not check_necessary(_application_id) or not check_optional(_research_interests, _introduction, _intention_state, _intention_picture):
         response = {'status': False, 'info': F_MISSING_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     if not check_enumeration(_intention_state, ('O', 'S', 'F')):
@@ -268,6 +308,8 @@ def update_apply_intention(request):
             application.introduction = _introduction
         if _intention_state is not None:
             application.intention_state = _intention_state
+        if _intention_picture is not None:
+            application.intention_picture = _intention_picture
         application.save()
         response = {'status': True, 'info': S_UPDATE_SUCCEED}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
