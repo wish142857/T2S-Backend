@@ -1,6 +1,16 @@
 """
 通用函数
 """
+import difflib
+
+
+def test():
+    str1 = '广州公安'
+    str2 = '广州公安市委市政府; asdasd; 21345214'
+    str3 = '广州'
+    return difflib.SequenceMatcher(None, str1, str2).quick_ratio()
+
+
 
 
 def check_necessary(*args) -> bool:
