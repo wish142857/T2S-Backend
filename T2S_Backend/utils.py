@@ -2,7 +2,7 @@
 通用函数
 """
 import difflib
-
+from user.models import Teacher, Student
 
 def test():
     str1 = '广州公安'
@@ -50,18 +50,29 @@ def auth_student(student_number, id_number) -> bool:
     return False
 
 
-def calculate_match_degree_t2s(t, s) -> int:
-    return 0
+# 计算匹配度  导师院系-学生院系  导师研究方向-学生研究兴趣
+def calculate_match_degree_t2s(t: Teacher, s: Student) -> int:
+    ratio_1 = difflib.SequenceMatcher(None, t.department, s.department).quick_ratio()
+    ratio_2 = difflib.SequenceMatcher(None, t.research_fields, s.research_interest).quick_ratio()
+    return ratio_1 + ratio_2
 
 
-def calculate_match_degree_s2t(s, t) -> int:
-    return 0
+# 计算匹配度  学生院系-导师院系  学生研究兴趣-导师研究方向
+def calculate_match_degree_s2t(s: Student, t: Teacher) -> int:
+    ratio_1 = difflib.SequenceMatcher(None, s.department, t.department).quick_ratio()
+    ratio_2 = difflib.SequenceMatcher(None, s.research_interest, t.research_fields).quick_ratio()
+    return ratio_1 + ratio_2
 
 
-def calculate_match_degree_t2t(t1, t2) -> int:
-    return 0
+# 计算匹配度  导师院系-导师院系  导师研究方向-导师研究方向
+def calculate_match_degree_t2t(t1: Teacher, t2: Teacher) -> int:
+    ratio_1 = difflib.SequenceMatcher(None, t1.department, t2.department).quick_ratio()
+    ratio_2 = difflib.SequenceMatcher(None, t1.research_fields, t2.research_fields).quick_ratio()
+    return ratio_1 + ratio_2
 
 
-def calculate_match_degree_s2s(s1, s2) -> int:
-    return 0
-
+# 计算匹配度  学生院系-学生院系  学生研究兴趣-学生研究兴趣
+def calculate_match_degree_s2s(s1: Student, s2: Student) -> int:
+    ratio_1 = difflib.SequenceMatcher(None, s1.department, s2.department).quick_ratio()
+    ratio_2 = difflib.SequenceMatcher(None, s1.research_interest, s2.research_interest).quick_ratio()
+    return ratio_1 + ratio_2

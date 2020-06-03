@@ -4,13 +4,6 @@
     <list default="true" id="7d6e89dd-d3c2-47ea-91e0-8519c37521f2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/T2S_Backend/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/T2S_Backend/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conversation/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/conversation/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/information/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/information/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/intention/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/intention/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -152,7 +145,8 @@
       <workItem from="1590980627623" duration="4889000" />
       <workItem from="1590996156464" duration="1864000" />
       <workItem from="1591061061558" duration="28496000" />
-      <workItem from="1591150342540" duration="4283000" />
+      <workItem from="1591150342540" duration="5101000" />
+      <workItem from="1591174518878" duration="997000" />
     </task>
     <servers />
   </component>
