@@ -6,8 +6,8 @@ from user.models import Teacher, Student
 from information.models import Information
 
 
-@ get_required
-@ login_required
+@get_required
+@login_required
 def get_information(request):
     # *** 请求处理 ***
     user = request.user
@@ -29,8 +29,8 @@ def get_information(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
-@ login_required
+@get_required
+@login_required
 def get_information_detail(request):
     # *** 参数获取 ***
     _information_id = request.GET.get('information_id')
@@ -80,8 +80,8 @@ def get_information_detail(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ post_required
-@ login_required
+@post_required
+@login_required
 def set_information_state(request):
     # *** 参数获取 ***
     _information_id = request.POST.get('information_id')
@@ -117,7 +117,7 @@ def set_information_state(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ post_required
+@post_required
 def create_information(request):
     # *** 参数获取 ***
     _receiver_type = request.POST.get('receiver_type')
@@ -170,7 +170,7 @@ def create_information(request):
             return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ post_required
+@post_required
 def delete_information(request):
     # *** 参数获取 ***
     _information_id = request.POST.get('information_id')

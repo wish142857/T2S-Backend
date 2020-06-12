@@ -8,7 +8,7 @@ from user.models import Teacher, Student
 from intention.models import Recruitment, Application
 
 
-@ get_required
+@get_required
 def search_teacher(request):
     # *** 参数获取 ***
     _key = request.GET.get('key')
@@ -29,7 +29,7 @@ def search_teacher(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
+@get_required
 def search_student(request):
     # *** 参数获取 ***
     _key = request.GET.get('key')
@@ -50,7 +50,7 @@ def search_student(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
+@get_required
 def search_recruit_intention(request):
     # *** 参数获取 ***
     _key = request.GET.get('key')
@@ -69,7 +69,7 @@ def search_recruit_intention(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
+@get_required
 def search_apply_intention(request):
     # *** 参数获取 ***
     _key = request.GET.get('key')

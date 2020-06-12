@@ -5,8 +5,8 @@ from T2S_Backend.utils import *
 from user.models import Teacher, Student
 
 
-@ get_required
-@ login_required
+@get_required
+@login_required
 def recommend_fit_teacher(request):
     # *** 请求处理 ***
     user = request.user
@@ -46,8 +46,8 @@ def recommend_fit_teacher(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
-@ login_required
+@get_required
+@login_required
 def recommend_hot_teacher(request):
     # *** 请求处理 ***
     user = request.user
@@ -82,8 +82,8 @@ def recommend_hot_teacher(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
-@ login_required
+@get_required
+@login_required
 def recommend_random_teacher(request):
     # *** 请求处理 ***
     # *** 请求处理 ***
@@ -109,8 +109,8 @@ def recommend_random_teacher(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
-@ login_required
+@get_required
+@login_required
 def recommend_fit_student(request):
     # *** 请求处理 ***
     user = request.user
@@ -150,8 +150,8 @@ def recommend_fit_student(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
-@ login_required
+@get_required
+@login_required
 def recommend_hot_student(request):
     # *** 请求处理 ***
     user = request.user
@@ -186,8 +186,8 @@ def recommend_hot_student(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
-@ login_required
+@get_required
+@login_required
 def recommend_random_student(request):
     # *** 请求处理 ***
     user = request.user

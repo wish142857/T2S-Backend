@@ -6,8 +6,8 @@ from user.models import Teacher, Student
 from conversation.models import Message
 
 
-@ get_required
-@ login_required
+@get_required
+@login_required
 def get_message(request):
     # *** 请求处理 ***
     user = request.user
@@ -45,8 +45,8 @@ def get_message(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
-@ login_required
+@get_required
+@login_required
 def get_new_messages(request):
     # *** 参数获取 ***
     _message_id = request.GET.get('message_id')
@@ -78,8 +78,8 @@ def get_new_messages(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
-@ login_required
+@get_required
+@login_required
 def get_all_messages(request):
     # *** 请求处理 ***
     user = request.user
@@ -105,8 +105,8 @@ def get_all_messages(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
-@ login_required
+@get_required
+@login_required
 def get_message_detail(request):
     # *** 参数获取 ***
     _message_id = request.GET.get('message_id')
@@ -189,8 +189,8 @@ def get_message_detail(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
-@ login_required
+@get_required
+@login_required
 def get_message_picture(request):
     # *** 参数获取 ***
     _message_id = request.GET.get('message_id')
@@ -224,8 +224,8 @@ def get_message_picture(request):
     return HttpResponse(None, content_type='image/jpeg')
 
 
-@ post_required
-@ login_required
+@post_required
+@login_required
 def send_message(request):
     # *** 参数获取 ***
     _object_id = request.POST.get('object_id')

@@ -9,7 +9,7 @@ from T2S_Backend.utils import *
 from user.models import Teacher, Student
 
 
-@ post_required
+@post_required
 def logon(request):
     # *** 参数获取 ***
     _type = request.POST.get('type')
@@ -39,8 +39,8 @@ def logon(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ post_required
-@ logout_required
+@post_required
+@logout_required
 def login(request):
     # *** 参数获取 ***
     _type = request.POST.get('type')
@@ -72,8 +72,8 @@ def login(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ post_required
-@ login_required
+@post_required
+@login_required
 def logout(request):
     # *** 请求处理 ***
     auth.logout(request)
@@ -81,8 +81,8 @@ def logout(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ post_required
-@ login_required
+@post_required
+@login_required
 def user_auth(request):
     # *** 参数获取 ***
     _type = request.POST.get('type')
@@ -132,8 +132,8 @@ def user_auth(request):
             return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ post_required
-@ login_required
+@post_required
+@login_required
 def change_password(request):
     # *** 参数获取 ***
     _old_password = request.POST.get('old_password')
@@ -176,8 +176,8 @@ def change_password(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
-@ login_required
+@get_required
+@login_required
 def get_info(request):
     # *** 参数获取 ***
     _type = request.GET.get('type')
@@ -274,8 +274,8 @@ def get_info(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ post_required
-@ login_required
+@post_required
+@login_required
 def update_info(request):
     # *** 参数获取 ***
     _name = request.POST.get('name')
@@ -334,8 +334,8 @@ def update_info(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
-@ login_required
+@get_required
+@login_required
 def get_info_plus(request):
     # *** 参数获取 ***
     _type = request.GET.get('type')
@@ -438,8 +438,8 @@ def get_info_plus(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ post_required
-@ login_required
+@post_required
+@login_required
 def update_info_plus(request):
     # *** 参数获取 ***
     _signature = request.POST.get('signature')
@@ -514,8 +514,8 @@ def update_info_plus(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
-@ login_required
+@get_required
+@login_required
 def get_info_picture(request):
     # *** 参数获取 ***
     _type = request.GET.get('type')
@@ -570,8 +570,8 @@ def get_info_picture(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ post_required
-@ login_required
+@post_required
+@login_required
 def update_info_picture(request):
     # *** 参数获取 ***
     _picture = request.FILES.get('picture')

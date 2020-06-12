@@ -6,8 +6,8 @@ from T2S_Backend.utils import *
 from user.models import Teacher, Student
 
 
-@ get_required
-@ login_required
+@get_required
+@login_required
 def get_watchlist(request):
     # *** 请求处理 ***
     user = request.user
@@ -55,8 +55,8 @@ def get_watchlist(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ get_required
-@ login_required
+@get_required
+@login_required
 def get_fanlist(request):
     # *** 请求处理 ***
     user = request.user
@@ -66,8 +66,8 @@ def get_fanlist(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ post_required
-@ login_required
+@post_required
+@login_required
 def add_to_watch(request):
     # *** 参数获取 ***
     _teacher_id = request.POST.get('teacher_id')
@@ -122,8 +122,8 @@ def add_to_watch(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
-@ post_required
-@ login_required
+@post_required
+@login_required
 def delete_from_watch(request):
     # *** 参数获取 ***
     _teacher_id = request.POST.get('teacher_id')
