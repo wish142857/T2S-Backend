@@ -22,6 +22,7 @@ def search_teacher(request):
         response = {'status': False, 'info': F_ERROR_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
+    # 获取用户关注列表
     user = request.user
     follow_list = None
     try:
@@ -35,6 +36,7 @@ def search_teacher(request):
     if follow_list is None:
         response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # 进行关键字搜索
     teachers = Teacher.objects.filter(
         Q(account__icontains=_key) | Q(name__icontains=_key) |
         Q(school__icontains=_key) | Q(department__icontains=_key) |
@@ -67,6 +69,7 @@ def search_student(request):
         response = {'status': False, 'info': F_ERROR_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
+    # 获取用户关注列表
     user = request.user
     follow_list = None
     try:
@@ -80,6 +83,7 @@ def search_student(request):
     if follow_list is None:
         response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # 进行关键字搜索
     students = Student.objects.filter(
         Q(account__icontains=_key) | Q(name__icontains=_key) |
         Q(school__icontains=_key) | Q(department__icontains=_key) | Q(major__icontains=_key) |
