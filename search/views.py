@@ -42,7 +42,7 @@ def search_teacher(request):
     )
     teacher_info_list = []
     for t in teachers.all():
-        teacher_info = {'teacher_id': t.teacher_id, 'name': t.name, 'school': t.school, 'department': t.department,
+        teacher_info = {'teacher_id': t.teacher_id, 'name': t.name, 'school': t.school, 'department': t.department, 'auth_state': t.auth_state,
                         'fans_number': t.user.teacher_fans.count() + t.user.student_fans.count(), 'is_followed': False}
         try:
             follow_list.get(username=t.user.username)
@@ -87,7 +87,7 @@ def search_student(request):
     )
     student_info_list = []
     for s in students.all():
-        student_info = {'student_id': s.student_id, 'name': s.name, 'school': s.school, 'department': s.department,
+        student_info = {'student_id': s.student_id, 'name': s.name, 'school': s.school, 'department': s.department, 'auth_state': s.auth_state,
                         'fans_number': s.user.teacher_fans.count() + s.user.student_fans.count(), 'is_followed': False}
         try:
             follow_list.get(username=s.user.username)
