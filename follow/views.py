@@ -80,7 +80,7 @@ def add_to_watch(request):
     user = request.user
     try:
         teacher = Teacher.objects.get(user=user)
-        if (_teacher_id is not None) and (not teacher.teacher_id.__eq__(_teacher_id)):
+        if (_teacher_id is not None) and (str(teacher.teacher_id) != _teacher_id):
             try:
                 u = Teacher.objects.get(teacher_id=_teacher_id).user
                 teacher.follows.add(u)
@@ -107,7 +107,7 @@ def add_to_watch(request):
             except Teacher.DoesNotExist:
                 response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
                 return HttpResponse(json.dumps(response, ensure_ascii=False))
-        if (_student_id is not None) and (not student.student_id.__eq__(_student_id)):
+        if (_student_id is not None) and (str(student.student_id) != _student_id):
             try:
                 u = Student.objects.get(student_id=_student_id).user
                 student.follows.add(u)
