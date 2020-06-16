@@ -14,18 +14,16 @@ def recommend_fit_teacher(request):
         teachers = Teacher.objects.order_by('?')[:N_RECOMMEND_RANDOM_NUMBER]
         if teachers.count() <= 1:
             raise IndexError
-        teacher_id = 0
-        max_match_degree = -1
+        teacher_list = []
         try:
             teacher = Teacher.objects.get(user=user)
             for t in teachers:
                 if t.teacher_id == teacher.teacher_id:
                     continue
                 match_degree = calculate_match_degree_t2t(teacher, t)
-                if match_degree > max_match_degree:
-                    teacher_id = t.teacher_id
-                    max_match_degree = match_degree
-            response = {'status': True, 'info': S_RECOMMEND_SUCCEED, 'teacher_id': teacher_id}
+                teacher_list.append((t.teacher_id, match_degree))
+            teacher_list.sort(key=lambda e: e[1], reverse=True)
+            response = {'status': True, 'info': S_RECOMMEND_SUCCEED, 'teacher_id_list': [e[0] for e in teacher_list[:N_RECOMMEND_MATCH_NUMBER]]}
             return HttpResponse(json.dumps(response, ensure_ascii=False))
         except Teacher.DoesNotExist:
             pass
@@ -33,10 +31,9 @@ def recommend_fit_teacher(request):
             student = Student.objects.get(user=user)
             for t in teachers:
                 match_degree = calculate_match_degree_s2t(student, t)
-                if match_degree > max_match_degree:
-                    teacher_id = t.teacher_id
-                    max_match_degree = match_degree
-            response = {'status': True, 'info': S_RECOMMEND_SUCCEED, 'teacher_id': teacher_id}
+                teacher_list.append((t.teacher_id, match_degree))
+            teacher_list.sort(key=lambda e: e[1], reverse=True)
+            response = {'status': True, 'info': S_RECOMMEND_SUCCEED, 'teacher_id_list': [e[0] for e in teacher_list[:N_RECOMMEND_MATCH_NUMBER]]}
             return HttpResponse(json.dumps(response, ensure_ascii=False))
         except Student.DoesNotExist:
             pass
@@ -118,16 +115,14 @@ def recommend_fit_student(request):
         students = Student.objects.order_by('?')[:N_RECOMMEND_RANDOM_NUMBER]
         if students.count() <= 1:
             raise IndexError
-        student_id = 0
-        max_match_degree = -1
+        student_list = []
         try:
             teacher = Teacher.objects.get(user=user)
             for s in students:
                 match_degree = calculate_match_degree_t2s(teacher, s)
-                if match_degree > max_match_degree:
-                    student_id = s.student_id
-                    max_match_degree = match_degree
-            response = {'status': True, 'info': S_RECOMMEND_SUCCEED, 'student_id': student_id}
+                student_list.append((s.student_id, match_degree))
+            student_list.sort(key=lambda e: e[1], reverse=True)
+            response = {'status': True, 'info': S_RECOMMEND_SUCCEED, 'student_id_list': [e[0] for e in student_list[:N_RECOMMEND_MATCH_NUMBER]]}
             return HttpResponse(json.dumps(response, ensure_ascii=False))
         except Teacher.DoesNotExist:
             pass
@@ -137,10 +132,9 @@ def recommend_fit_student(request):
                 if s.student_id == student.student_id:
                     continue
                 match_degree = calculate_match_degree_s2s(student, s)
-                if match_degree > max_match_degree:
-                    student_id = s.student_id
-                    max_match_degree = match_degree
-            response = {'status': True, 'info': S_RECOMMEND_SUCCEED, 'student_id': student_id}
+                student_list.append((s.student_id, match_degree))
+            student_list.sort(key=lambda e: e[1], reverse=True)
+            response = {'status': True, 'info': S_RECOMMEND_SUCCEED, 'student_id_list': [e[0] for e in student_list[:N_RECOMMEND_MATCH_NUMBER]]}
             return HttpResponse(json.dumps(response, ensure_ascii=False))
         except Student.DoesNotExist:
             pass
