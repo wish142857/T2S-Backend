@@ -127,11 +127,17 @@ def get_message_detail(request):
             response = {
                 'status': True,
                 'info': S_QUERY_SUCCEED,
+                'object_type': message.receiver_type,
+                'object_id': None,
                 'message_way': 'S',
                 'message_type': message.message_type,
                 'message_content': None,
                 'message_time': message.message_time.strftime('%Y-%m-%d %H:%M'),
             }
+            if response['object_type'] == 'T':
+                response['object_id'] = message.receiver_teacher.teacher_id
+            else:
+                response['object_id'] = message.receiver_student.student_id
             if message.message_type == 'T':
                 response['message_content'] = str(message.message_content, encoding="utf-8")
             elif message.message_type == 'P':
@@ -141,11 +147,17 @@ def get_message_detail(request):
             response = {
                 'status': True,
                 'info': S_QUERY_SUCCEED,
+                'object_type': message.sender_type,
+                'object_id': None,
                 'message_way': 'R',
                 'message_type': message.message_type,
                 'message_content': None,
                 'message_time': message.message_time.strftime('%Y-%m-%d %H:%M'),
             }
+            if response['object_type'] == 'T':
+                response['object_id'] = message.sender_teacher.teacher_id
+            else:
+                response['object_id'] = message.sender_student.student_id
             if message.message_type == 'T':
                 response['message_content'] = str(message.message_content, encoding="utf-8")
             elif message.message_type == 'P':
@@ -159,11 +171,17 @@ def get_message_detail(request):
             response = {
                 'status': True,
                 'info': S_QUERY_SUCCEED,
+                'object_type': message.receiver_type,
+                'object_id': None,
                 'message_way': 'S',
                 'message_type': message.message_type,
                 'message_content': None,
-                'message_time': message.message_time,
+                'message_time': message.message_time.strftime('%Y-%m-%d %H:%M'),
             }
+            if response['object_type'] == 'T':
+                response['object_id'] = message.receiver_teacher.teacher_id
+            else:
+                response['object_id'] = message.receiver_student.student_id
             if message.message_type == 'T':
                 response['message_content'] = str(message.message_content, encoding="utf-8")
             elif message.message_type == 'P':
@@ -173,15 +191,23 @@ def get_message_detail(request):
             response = {
                 'status': True,
                 'info': S_QUERY_SUCCEED,
+                'object_type': message.sender_type,
+                'object_id': None,
                 'message_way': 'R',
                 'message_type': message.message_type,
                 'message_content': None,
-                'message_time': message.message_time,
+                'message_time': message.message_time.strftime('%Y-%m-%d %H:%M'),
             }
+            if response['object_type'] == 'T':
+                response['object_id'] = message.sender_teacher.teacher_id
+            else:
+                response['object_id'] = message.sender_student.student_id
             if message.message_type == 'T':
                 response['message_content'] = str(message.message_content, encoding="utf-8")
             elif message.message_type == 'P':
                 response['message_content'] = '[图片]'
+
+            print('@@@@@@@@@@@@@@@@@@', response)
             return HttpResponse(json.dumps(response, ensure_ascii=False))
     except Student.DoesNotExist:
         pass
