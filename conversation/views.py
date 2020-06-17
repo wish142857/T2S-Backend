@@ -206,8 +206,6 @@ def get_message_detail(request):
                 response['message_content'] = str(message.message_content, encoding="utf-8")
             elif message.message_type == 'P':
                 response['message_content'] = '[图片]'
-
-            print('@@@@@@@@@@@@@@@@@@', response)
             return HttpResponse(json.dumps(response, ensure_ascii=False))
     except Student.DoesNotExist:
         pass
