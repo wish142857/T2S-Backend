@@ -42,18 +42,44 @@ def search_teacher(request):
         Q(school__icontains=_key) | Q(department__icontains=_key) |
         Q(introduction__icontains=_key) | Q(research_fields__icontains=_key)
     )
-    teacher_info_list = []
-    for t in teachers.all():
-        teacher_info = {'teacher_id': t.teacher_id, 'name': t.name, 'gender': t.gender,
-                        'school': t.school, 'department': t.department, 'auth_state': t.auth_state,
-                        'fans_number': t.user.teacher_fans.count() + t.user.student_fans.count(), 'is_followed': False}
-        try:
-            follow_list.get(username=t.user.username)
-            teacher_info['is_followed'] = True
-        except User.DoesNotExist:
-            pass
-        teacher_info_list.append(teacher_info)
-    response = {'status': True, 'info': S_SEARCH_SUCCEED, 'teacher_info_list': teacher_info_list}
+    if teachers.all().count() == 0:
+        response = {'status': False, 'info': F_ERROR_NOT_FOUND}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    try:
+        teacher = Teacher.objects.get(user=user)
+        teacher_info_list = []
+        for t in teachers.all():
+            teacher_info = {'teacher_id': t.teacher_id, 'name': t.name, 'gender': t.gender, 'school': t.school, 'department': t.department,
+                            'auth_state': t.auth_state, 'fans_number': t.user.teacher_fans.count() + t.user.student_fans.count(),
+                            'is_followed': False, 'match_degree': calculate_match_degree_t2t(teacher, t)}
+            try:
+                follow_list.get(username=t.user.username)
+                teacher_info['is_followed'] = True
+            except User.DoesNotExist:
+                pass
+            teacher_info_list.append(teacher_info)
+        response = {'status': True, 'info': S_SEARCH_SUCCEED, 'teacher_info_list': teacher_info_list}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    except Teacher.DoesNotExist:
+        pass
+    try:
+        student = Student.objects.get(user=user)
+        teacher_info_list = []
+        for t in teachers.all():
+            teacher_info = {'teacher_id': t.teacher_id, 'name': t.name, 'gender': t.gender, 'school': t.school,
+                            'department': t.department, 'auth_state': t.auth_state, 'fans_number': t.user.teacher_fans.count() + t.user.student_fans.count(),
+                            'is_followed': False, 'match_degree': calculate_match_degree_s2t(student, t)}
+            try:
+                follow_list.get(username=t.user.username)
+                teacher_info['is_followed'] = True
+            except User.DoesNotExist:
+                pass
+            teacher_info_list.append(teacher_info)
+        response = {'status': True, 'info': S_SEARCH_SUCCEED, 'teacher_info_list': teacher_info_list}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    except Student.DoesNotExist:
+        pass
+    response = {'status': False, 'info': F_ERROR_NOT_FOUND}
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
@@ -90,18 +116,44 @@ def search_student(request):
         Q(school__icontains=_key) | Q(department__icontains=_key) | Q(major__icontains=_key) |
         Q(introduction__icontains=_key) | Q(research_experience__icontains=_key)
     )
-    student_info_list = []
-    for s in students.all():
-        student_info = {'student_id': s.student_id, 'name': s.name, 'gender': s.gender,
-                        'school': s.school, 'department': s.department, 'auth_state': s.auth_state,
-                        'fans_number': s.user.teacher_fans.count() + s.user.student_fans.count(), 'is_followed': False}
-        try:
-            follow_list.get(username=s.user.username)
-            student_info['is_followed'] = True
-        except User.DoesNotExist:
-            pass
-        student_info_list.append(student_info)
-    response = {'status': True, 'info': S_SEARCH_SUCCEED, 'student_info_list': student_info_list}
+    if students.all().count() == 0:
+        response = {'status': False, 'info': F_ERROR_NOT_FOUND}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    try:
+        teacher = Teacher.objects.get(user=user)
+        student_info_list = []
+        for s in students.all():
+            student_info = {'student_id': s.student_id, 'name': s.name, 'gender': s.gender, 'school': s.school,
+                            'department': s.department, 'auth_state': s.auth_state, 'fans_number': s.user.teacher_fans.count() + s.user.student_fans.count(),
+                            'is_followed': False, 'match_degree': calculate_match_degree_t2s(teacher, s)}
+            try:
+                follow_list.get(username=s.user.username)
+                student_info['is_followed'] = True
+            except User.DoesNotExist:
+                pass
+            student_info_list.append(student_info)
+        response = {'status': True, 'info': S_SEARCH_SUCCEED, 'student_info_list': student_info_list}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    except Teacher.DoesNotExist:
+        pass
+    try:
+        student = Student.objects.get(user=user)
+        student_info_list = []
+        for s in students.all():
+            student_info = {'student_id': s.student_id, 'name': s.name, 'gender': s.gender, 'school': s.school,
+                            'department': s.department, 'auth_state': s.auth_state, 'fans_number': s.user.teacher_fans.count() + s.user.student_fans.count(),
+                            'is_followed': False, 'match_degree': calculate_match_degree_s2s(student, s)}
+            try:
+                follow_list.get(username=s.user.username)
+                student_info['is_followed'] = True
+            except User.DoesNotExist:
+                pass
+            student_info_list.append(student_info)
+        response = {'status': True, 'info': S_SEARCH_SUCCEED, 'student_info_list': student_info_list}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    except Student.DoesNotExist:
+        pass
+    response = {'status': False, 'info': F_ERROR_NOT_FOUND}
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
