@@ -177,7 +177,6 @@ def change_password(request):
 
 
 @get_required
-@login_required
 def get_info(request):
     # *** 参数获取 ***
     _type = request.GET.get('type')
@@ -235,6 +234,8 @@ def get_info(request):
             return HttpResponse(json.dumps(response, ensure_ascii=False))
     else:
         user = request.user
+        if not user.is_authenticated:
+            return HttpResponse(status=401)
         try:
             teacher = Teacher.objects.get(user=user)
             response = {
@@ -335,7 +336,6 @@ def update_info(request):
 
 
 @get_required
-@login_required
 def get_info_plus(request):
     # *** 参数获取 ***
     _type = request.GET.get('type')
@@ -394,6 +394,8 @@ def get_info_plus(request):
             return HttpResponse(json.dumps(response, ensure_ascii=False))
     else:
         user = request.user
+        if not user.is_authenticated:
+            return HttpResponse(status=401)
         try:
             teacher = Teacher.objects.get(user=user)
             response = {
@@ -515,7 +517,6 @@ def update_info_plus(request):
 
 
 @get_required
-@login_required
 def get_info_picture(request):
     # *** 参数获取 ***
     _type = request.GET.get('type')
@@ -552,6 +553,8 @@ def get_info_picture(request):
             return HttpResponse(None, content_type='image/jpeg')
     else:
         user = request.user
+        if not user.is_authenticated:
+            return HttpResponse(status=401)
         try:
             teacher = Teacher.objects.get(user=user)
             return HttpResponse(teacher.picture.file, content_type='image/jpeg')
