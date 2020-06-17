@@ -170,10 +170,13 @@ def search_recruit_intention(request):
         response = {'status': False, 'info': F_ERROR_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
-    recruitment = Recruitment.objects.filter(
+    recruitments = Recruitment.objects.filter(
         Q(research_fields__icontains=_key) | Q(introduction__icontains=_key)
     )
-    response = {'status': True, 'info': S_SEARCH_SUCCEED, 'recruitment_id_list': [r.recruitment_id for r in recruitment.all()]}
+    if recruitments.all().count() == 0:
+        response = {'status': False, 'info': F_ERROR_NOT_FOUND}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    response = {'status': True, 'info': S_SEARCH_SUCCEED, 'recruitment_id_list': [r.recruitment_id for r in recruitments.all()]}
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
@@ -190,8 +193,11 @@ def search_apply_intention(request):
         response = {'status': False, 'info': F_ERROR_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
-    application = Application.objects.filter(
+    applications = Application.objects.filter(
         Q(research_interests__icontains=_key) | Q(introduction__icontains=_key)
     )
-    response = {'status': True, 'info': S_SEARCH_SUCCEED, 'application_id_list': [a.application_id for a in application.all()]}
+    if applications.all().count() == 0:
+        response = {'status': False, 'info': F_ERROR_NOT_FOUND}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    response = {'status': True, 'info': S_SEARCH_SUCCEED, 'application_id_list': [a.application_id for a in applications.all()]}
     return HttpResponse(json.dumps(response, ensure_ascii=False))
