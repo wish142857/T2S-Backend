@@ -4,13 +4,20 @@
 import difflib
 from user.models import Teacher, Student
 
-def test():
-    str1 = '广州公安'
-    str2 = '广州公安市委市政府; asdasd; 21345214'
-    str3 = '广州'
-    return difflib.SequenceMatcher(None, str1, str2).quick_ratio()
+
+def main():
+    s = set()
+    a = ('q1', 'w1', 1)
+    b = ('q2', 'w2', 2)
+    c = ('q1', 'w1', 1)
+    s.add(a)
+    s.add(b)
+    s.add(c)
+    print(s)
 
 
+if __name__ == '__main__':
+    main()
 
 
 def check_necessary(*args) -> bool:

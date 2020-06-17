@@ -8,6 +8,55 @@ from conversation.models import Message
 
 @get_required
 @login_required
+def get_conversation(request):
+    # *** 请求处理 ***
+    user = request.user
+    conversation_set = set()
+    try:
+        teacher = Teacher.objects.get(user=user)
+        for m in teacher.s_messages.all():
+            if m.receiver_type == 'T':
+                conversation = ('T', m.receiver_teacher.teacher_id, m.receiver_teacher.account, m.receiver_teacher.name)
+                conversation_set.add(conversation)
+            else:
+                conversation = ('S', m.receiver_student.student_id, m.receiver_student.account, m.receiver_student.name)
+                conversation_set.add(conversation)
+        for m in teacher.r_messages.all():
+            if m.sender_type == 'T':
+                conversation = ('T', m.sender_teacher.teacher_id, m.sender_teacher.account, m.sender_teacher.name)
+                conversation_set.add(conversation)
+            else:
+                conversation = ('S', m.sender_student.student_id, m.sender_student.account, m.sender_student.name)
+                conversation_set.add(conversation)
+    except Teacher.DoesNotExist:
+        pass
+    try:
+        student = Student.objects.get(user=user)
+        for m in student.s_messages.all():
+            if m.receiver_type == 'T':
+                conversation = ('T', m.receiver_teacher.teacher_id, m.receiver_teacher.account, m.receiver_teacher.name)
+                conversation_set.add(conversation)
+            else:
+                conversation = ('S', m.receiver_student.student_id, m.receiver_student.account, m.receiver_student.name)
+                conversation_set.add(conversation)
+        for m in student.r_messages.all():
+            if m.sender_type == 'T':
+                conversation = ('T', m.sender_teacher.teacher_id, m.sender_teacher.account, m.sender_teacher.name)
+                conversation_set.add(conversation)
+            else:
+                conversation = ('S', m.sender_student.student_id, m.sender_student.account, m.sender_student.name)
+                conversation_set.add(conversation)
+    except Student.DoesNotExist:
+        pass
+    conversation_list = []
+    for c in conversation_set:
+        conversation_list.append({'object_type': c[0], 'object_id': c[1], 'object_account': c[2], 'object_name': c[3]})
+    response = {'status': True, 'info': S_QUERY_SUCCEED, 'conversation_list': conversation_list}
+    return HttpResponse(json.dumps(response, ensure_ascii=False))
+
+
+@get_required
+@login_required
 def get_message(request):
     # *** 请求处理 ***
     user = request.user
@@ -129,6 +178,8 @@ def get_message_detail(request):
                 'info': S_QUERY_SUCCEED,
                 'object_type': message.receiver_type,
                 'object_id': None,
+                'object_account': None,
+                'object_name': None,
                 'message_way': 'S',
                 'message_type': message.message_type,
                 'message_content': None,
@@ -136,8 +187,12 @@ def get_message_detail(request):
             }
             if response['object_type'] == 'T':
                 response['object_id'] = message.receiver_teacher.teacher_id
+                response['object_account'] = message.receiver_teacher.account
+                response['object_name'] = message.receiver_teacher.name
             else:
                 response['object_id'] = message.receiver_student.student_id
+                response['object_account'] = message.receiver_student.account
+                response['object_name'] = message.receiver_student.name
             if message.message_type == 'T':
                 response['message_content'] = str(message.message_content, encoding="utf-8")
             elif message.message_type == 'P':
@@ -149,6 +204,8 @@ def get_message_detail(request):
                 'info': S_QUERY_SUCCEED,
                 'object_type': message.sender_type,
                 'object_id': None,
+                'object_account': None,
+                'object_name': None,
                 'message_way': 'R',
                 'message_type': message.message_type,
                 'message_content': None,
@@ -156,8 +213,12 @@ def get_message_detail(request):
             }
             if response['object_type'] == 'T':
                 response['object_id'] = message.sender_teacher.teacher_id
+                response['object_account'] = message.sender_teacher.account
+                response['object_name'] = message.sender_teacher.name
             else:
                 response['object_id'] = message.sender_student.student_id
+                response['object_account'] = message.sender_student.account
+                response['object_name'] = message.sender_student.name
             if message.message_type == 'T':
                 response['message_content'] = str(message.message_content, encoding="utf-8")
             elif message.message_type == 'P':
@@ -173,6 +234,8 @@ def get_message_detail(request):
                 'info': S_QUERY_SUCCEED,
                 'object_type': message.receiver_type,
                 'object_id': None,
+                'object_account': None,
+                'object_name': None,
                 'message_way': 'S',
                 'message_type': message.message_type,
                 'message_content': None,
@@ -180,8 +243,12 @@ def get_message_detail(request):
             }
             if response['object_type'] == 'T':
                 response['object_id'] = message.receiver_teacher.teacher_id
+                response['object_account'] = message.receiver_teacher.account
+                response['object_name'] = message.receiver_teacher.name
             else:
                 response['object_id'] = message.receiver_student.student_id
+                response['object_account'] = message.receiver_student.account
+                response['object_name'] = message.receiver_student.name
             if message.message_type == 'T':
                 response['message_content'] = str(message.message_content, encoding="utf-8")
             elif message.message_type == 'P':
@@ -193,6 +260,8 @@ def get_message_detail(request):
                 'info': S_QUERY_SUCCEED,
                 'object_type': message.sender_type,
                 'object_id': None,
+                'object_account': None,
+                'object_name': None,
                 'message_way': 'R',
                 'message_type': message.message_type,
                 'message_content': None,
@@ -200,8 +269,12 @@ def get_message_detail(request):
             }
             if response['object_type'] == 'T':
                 response['object_id'] = message.sender_teacher.teacher_id
+                response['object_account'] = message.sender_teacher.account
+                response['object_name'] = message.sender_teacher.name
             else:
                 response['object_id'] = message.sender_student.student_id
+                response['object_account'] = message.sender_student.account
+                response['object_name'] = message.sender_student.name
             if message.message_type == 'T':
                 response['message_content'] = str(message.message_content, encoding="utf-8")
             elif message.message_type == 'P':
