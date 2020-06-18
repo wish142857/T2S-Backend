@@ -85,51 +85,45 @@ def logout(request):
 @login_required
 def user_auth(request):
     # *** 参数获取 ***
-    _type = request.POST.get('type')
     _teacher_number = request.POST.get('teacher_number')
     _student_number = request.POST.get('student_number')
     _id_number = request.POST.get('id_number')
     # *** 合法性检测 ***
-    if not check_necessary(_type, _id_number) or not check_optional(_teacher_number, _student_number):
+    if not check_necessary(_id_number) or not check_optional(_teacher_number, _student_number):
         response = {'status': False, 'info': F_MISSING_PARAMETER}
-        return HttpResponse(json.dumps(response, ensure_ascii=False))
-    if not check_enumeration(_type, ('T', 'S')):
-        response = {'status': False, 'info': F_ERROR_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
     user = request.user
-    if _type == 'T':
-        try:
-            teacher = Teacher.objects.get(user=user)
-            if auth_teacher(_teacher_number, _id_number):
-                teacher.auth_state = 'QD'
-                teacher.teacher_number = _teacher_number
-                teacher.id_number = _id_number
-                teacher.save()
-                response = {'status': True, 'info': S_AUTH_SUCCEED}
-                return HttpResponse(json.dumps(response, ensure_ascii=False))
-            else:
-                response = {'status': False, 'info': F_AUTH_FAIL}
-                return HttpResponse(json.dumps(response, ensure_ascii=False))
-        except Teacher.DoesNotExist:
-            response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+    try:
+        teacher = Teacher.objects.get(user=user)
+        if auth_teacher(_teacher_number, _id_number):
+            teacher.auth_state = 'QD'
+            teacher.teacher_number = _teacher_number
+            teacher.id_number = _id_number
+            teacher.save()
+            response = {'status': True, 'info': S_AUTH_SUCCEED}
             return HttpResponse(json.dumps(response, ensure_ascii=False))
-    else:
-        try:
-            student = Student.objects.get(user=user)
-            if auth_student(_student_number, _id_number):
-                student.auth_state = 'QD'
-                student.student_number = _student_number
-                student.id_number = _id_number
-                student.save()
-                response = {'status': True, 'info': S_AUTH_SUCCEED}
-                return HttpResponse(json.dumps(response, ensure_ascii=False))
-            else:
-                response = {'status': False, 'info': F_AUTH_FAIL}
-                return HttpResponse(json.dumps(response, ensure_ascii=False))
-        except Student.DoesNotExist:
-            response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+        else:
+            response = {'status': False, 'info': F_AUTH_FAIL}
             return HttpResponse(json.dumps(response, ensure_ascii=False))
+    except Teacher.DoesNotExist:
+        pass
+    try:
+        student = Student.objects.get(user=user)
+        if auth_student(_student_number, _id_number):
+            student.auth_state = 'QD'
+            student.student_number = _student_number
+            student.id_number = _id_number
+            student.save()
+            response = {'status': True, 'info': S_AUTH_SUCCEED}
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+        else:
+            response = {'status': False, 'info': F_AUTH_FAIL}
+            return HttpResponse(json.dumps(response, ensure_ascii=False))
+    except Student.DoesNotExist:
+        pass
+    response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+    return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
 @post_required

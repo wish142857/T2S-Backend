@@ -51,12 +51,12 @@ def check_enumeration(arg, choices) -> bool:
 
 def auth_teacher(teacher_number, id_number) -> bool:
     # TODO
-    return False
+    return teacher_number == id_number
 
 
 def auth_student(student_number, id_number) -> bool:
     # TODO
-    return False
+    return student_number == id_number
 
 
 # 计算匹配度  导师院系-学生院系  导师研究方向-学生研究兴趣
