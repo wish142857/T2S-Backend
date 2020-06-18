@@ -202,7 +202,7 @@ def search_recruit_intention(request):
         teacher = Teacher.objects.get(user=user)
         recruitment_info_list = []
         for r in recruitments.all():
-            recruitment_info = {'recruitment_id': r.recruitment_id, 'teacher_name': r.publisher.name, 'teacher_school': r.publisher.school,
+            recruitment_info = {'recruitment_id': r.recruitment_id, 'teacher_id': r.publisher.teacher_id, 'teacher_name': r.publisher.name, 'teacher_school': r.publisher.school,
                                 'teacher_department': r.publisher.department, 'recruitment_type': r.recruitment_type, 'recruitment_number': r. recruitment_number,
                                 'research_fields': r.research_fields, 'intention_state': r.intention_state, 'match_degree': calculate_match_degree_t2r(teacher, r)}
             recruitment_info_list.append(recruitment_info)
@@ -214,7 +214,7 @@ def search_recruit_intention(request):
         student = Student.objects.get(user=user)
         recruitment_info_list = []
         for r in recruitments.all():
-            recruitment_info = {'recruitment_id': r.recruitment_id, 'teacher_name': r.publisher.name, 'teacher_school': r.publisher.school,
+            recruitment_info = {'recruitment_id': r.recruitment_id, 'teacher_id': r.publisher.teacher_id, 'teacher_name': r.publisher.name, 'teacher_school': r.publisher.school,
                                 'teacher_department': r.publisher.department, 'recruitment_type': r.recruitment_type, 'recruitment_number': r.recruitment_number,
                                 'research_fields': r.research_fields, 'intention_state': r.intention_state, 'match_degree': calculate_match_degree_s2r(student, r)}
             recruitment_info_list.append(recruitment_info)
@@ -251,7 +251,7 @@ def search_apply_intention(request):
         teacher = Teacher.objects.get(user=user)
         application_info_list = []
         for a in applications.all():
-            application_info = {'application_id': a.application_id, 'student_name': a.publisher.name, 'student_school': a.publisher.school,
+            application_info = {'application_id': a.application_id, 'student_id': a.publisher.student_id, 'student_name': a.publisher.name, 'student_school': a.publisher.school,
                                 'student_department': a.publisher.department, 'research_interests': a.research_interests,
                                 'intention_state': a. intention_state, 'match_degree': calculate_match_degree_t2a(teacher, a)}
             application_info_list.append(application_info)
@@ -263,7 +263,7 @@ def search_apply_intention(request):
         student = Student.objects.get(user=user)
         application_info_list = []
         for a in applications.all():
-            application_info = {'application_id': a.application_id, 'student_name': a.publisher.name, 'student_school': a.publisher.school,
+            application_info = {'application_id': a.application_id, 'student_id': a.publisher.student_id, 'student_name': a.publisher.name, 'student_school': a.publisher.school,
                                 'student_department': a.publisher.department, 'research_interests': a.research_interests,
                                 'intention_state': a. intention_state, 'match_degree': calculate_match_degree_s2a(student, a)}
             application_info_list.append(application_info)
