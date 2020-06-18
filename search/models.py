@@ -7,4 +7,4 @@ class SearchRecord(models.Model):
     owner_user = models.ForeignKey(User, on_delete=models.CASCADE)          # 所属用户
 
     search_key = models.CharField(max_length=64)                            # 搜索关键字
-    search_time = models.DateTimeField(auto_now_add=True)                   # 搜索时间
+    search_time = models.DateTimeField()                                    # 搜索时间（最近一次）
