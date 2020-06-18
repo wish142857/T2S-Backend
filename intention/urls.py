@@ -15,4 +15,6 @@ urlpatterns = [
     path('create_apply_intention', views.create_apply_intention, name='create_apply_intention'),
     path('delete_apply_intention', views.delete_apply_intention, name='delete_apply_intention'),
     path('update_apply_intention', views.update_apply_intention, name='update_apply_intention'),
+
+    path('clear_all_intention', views.clear_all_intention, name='clear_all_intention'),
 ]

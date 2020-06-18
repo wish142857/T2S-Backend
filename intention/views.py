@@ -316,3 +316,26 @@ def update_apply_intention(request):
     except (Student.DoesNotExist, Application.DoesNotExist):
         response = {'status': False, 'info': F_UPDATE_FAIL}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
+
+
+@post_required
+@login_required
+def clear_all_intention(request):
+    # *** 请求处理 ***
+    user = request.user
+    try:
+        teacher = Teacher.objects.get(user=user)
+        Recruitment.objects.filter(publisher=teacher).delete()
+        response = {'status': True, 'info': S_DELETE_SUCCEED}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    except Teacher.DoesNotExist:
+        pass
+    try:
+        student = Student.objects.get(user=user)
+        Application.objects.filter(publisher=student).delete()
+        response = {'status': True, 'info': S_DELETE_SUCCEED}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    except Student.DoesNotExist:
+        pass
+    response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+    return HttpResponse(json.dumps(response, ensure_ascii=False))
