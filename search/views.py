@@ -5,8 +5,26 @@ from django.db.models import Q
 from T2S_Backend.decorators import *
 from T2S_Backend.globals import *
 from T2S_Backend.utils import *
+from search.models import SearchRecord
 from user.models import Teacher, Student
 from intention.models import Recruitment, Application
+
+
+@get_required
+@login_required
+def get_search_record(request):
+    # *** 参数获取 ***
+    try:
+        _number = int(request.GET.get('number'))
+    except ValueError:
+        _number = 0
+    if _number is None or _number <= 0:
+        _number = N_DEFAULT_GET_SEARCH_RECORD_NUMBER
+    # *** 请求处理 ***
+    user = request.user
+    search_record_list = [sr.search_key for sr in user.searchrecord_set.all().order_by('-search_record_id')[:_number]]
+    response = {'status': True, 'info': S_QUERY_SUCCEED, 'search_record_list': search_record_list}
+    return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
 @get_required
@@ -37,6 +55,7 @@ def search_teacher(request):
         response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # 进行关键字搜索
+    SearchRecord.objects.create(owner_user=user, search_key=_key)
     teachers = Teacher.objects.filter(
         Q(account__icontains=_key) | Q(name__icontains=_key) |
         Q(school__icontains=_key) | Q(department__icontains=_key) |
@@ -111,6 +130,7 @@ def search_student(request):
         response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # 进行关键字搜索
+    SearchRecord.objects.create(owner_user=user, search_key=_key)
     students = Student.objects.filter(
         Q(account__icontains=_key) | Q(name__icontains=_key) |
         Q(school__icontains=_key) | Q(department__icontains=_key) | Q(major__icontains=_key) |
@@ -171,6 +191,7 @@ def search_recruit_intention(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
     user = request.user
+    SearchRecord.objects.create(owner_user=user, search_key=_key)
     recruitments = Recruitment.objects.filter(
         Q(research_fields__icontains=_key) | Q(introduction__icontains=_key)
     )
@@ -219,6 +240,7 @@ def search_apply_intention(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
     user = request.user
+    SearchRecord.objects.create(owner_user=user, search_key=_key)
     applications = Application.objects.filter(
         Q(research_interests__icontains=_key) | Q(introduction__icontains=_key)
     )

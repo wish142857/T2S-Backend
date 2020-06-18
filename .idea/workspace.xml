@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7d6e89dd-d3c2-47ea-91e0-8519c37521f2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Wish.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/Wish.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/search/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/search/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -70,6 +68,28 @@
     </option>
   </component>
   <component name="RunManager" selected="Django server.T2S_Backend">
+    <configuration name="build" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="T2S_Backend" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/T2S_Backend" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/T2S_Backend/build.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="utils" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="T2S_Backend" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -119,9 +139,11 @@
     <list>
       <item itemvalue="Django server.T2S_Backend" />
       <item itemvalue="Python.utils" />
+      <item itemvalue="Python.build" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.build" />
         <item itemvalue="Python.utils" />
       </list>
     </recent_temporary>
@@ -164,7 +186,8 @@
       <workItem from="1592377448755" duration="3123000" />
       <workItem from="1592394567182" duration="6327000" />
       <workItem from="1592407803924" duration="2878000" />
-      <workItem from="1592411341459" duration="3836000" />
+      <workItem from="1592411341459" duration="3880000" />
+      <workItem from="1592462596956" duration="1838000" />
     </task>
     <servers />
   </component>
@@ -188,6 +211,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/T2S_Backend$build.coverage" NAME="build Coverage Results" MODIFIED="1592463683598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/T2S_Backend" />
     <SUITE FILE_PATH="coverage/T2S_Backend$utils.coverage" NAME="utils Coverage Results" MODIFIED="1592399503606" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/T2S_Backend" />
   </component>
 </project>

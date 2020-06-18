@@ -1,6 +1,9 @@
 import random
 import requests
 
+'''
+数据自动创建脚本
+'''
 
 SERVER_HOST = "http://127.0.0.1:8000"
 TEACHER_NUMBER = 10         # 创建导师用户数量
