@@ -1,4 +1,5 @@
 import json
+from collections import Counter
 
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -16,13 +17,29 @@ def get_search_record(request):
     # *** 参数获取 ***
     try:
         _number = int(request.GET.get('number'))
-    except ValueError:
+    except (TypeError, ValueError):
         _number = 0
     if _number is None or _number <= 0:
         _number = N_DEFAULT_GET_SEARCH_RECORD_NUMBER
     # *** 请求处理 ***
     user = request.user
     search_record_list = [sr.search_key for sr in user.searchrecord_set.all().order_by('-search_record_id')[:_number]]
+    response = {'status': True, 'info': S_QUERY_SUCCEED, 'search_record_list': search_record_list}
+    return HttpResponse(json.dumps(response, ensure_ascii=False))
+
+
+@get_required
+def get_hot_search_record(request):
+    # *** 参数获取 ***
+    try:
+        _number = int(request.GET.get('number'))
+    except (TypeError, ValueError):
+        _number = 0
+    if _number is None or _number <= 0:
+        _number = N_DEFAULT_GET_HOT_SEARCH_RECORD_NUMBER
+    # *** 请求处理 ***
+    search_record_counter = Counter([sr.search_key for sr in SearchRecord.objects.all()])
+    search_record_list = [sr[0] for sr in search_record_counter.most_common(_number)]
     response = {'status': True, 'info': S_QUERY_SUCCEED, 'search_record_list': search_record_list}
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
