@@ -554,7 +554,7 @@ def get_info_picture(request):
         except Teacher.DoesNotExist:
             response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
             return HttpResponse(json.dumps(response, ensure_ascii=False))
-        except ValueError:
+        except (ValueError, TypeError):
             return HttpResponse(None, content_type='image/jpeg')
     elif _type == 'S':
         try:
@@ -564,7 +564,7 @@ def get_info_picture(request):
         except Student.DoesNotExist:
             response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
             return HttpResponse(json.dumps(response, ensure_ascii=False))
-        except ValueError:
+        except (ValueError, TypeError):
             return HttpResponse(None, content_type='image/jpeg')
     else:
         user = request.user
@@ -576,7 +576,7 @@ def get_info_picture(request):
             # return HttpResponse(teacher.picture.file, content_type='image/jpeg')
         except Teacher.DoesNotExist:
             pass
-        except ValueError:
+        except (ValueError, TypeError):
             return HttpResponse(None, content_type='image/jpeg')
         try:
             student = Student.objects.get(user=user)
@@ -584,7 +584,7 @@ def get_info_picture(request):
             # return HttpResponse(student.picture.file, content_type='image/jpeg')
         except Student.DoesNotExist:
             pass
-        except ValueError:
+        except (ValueError, TypeError):
             return HttpResponse(None, content_type='image/jpeg')
         response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
