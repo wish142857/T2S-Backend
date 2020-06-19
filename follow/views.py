@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from django.contrib.auth.models import User
@@ -5,6 +6,7 @@ from django.shortcuts import render
 from T2S_Backend.decorators import *
 from T2S_Backend.globals import *
 from T2S_Backend.utils import *
+from information.models import Information
 from user.models import Teacher, Student
 
 
@@ -109,15 +111,29 @@ def add_to_watch(request):
         teacher = Teacher.objects.get(user=user)
         if (_teacher_id is not None) and (str(teacher.teacher_id) != _teacher_id):
             try:
-                u = Teacher.objects.get(teacher_id=_teacher_id).user
-                teacher.follows.add(u)
+                t = Teacher.objects.get(teacher_id=_teacher_id)
+                teacher.follows.add(t.user)
+                Information.objects.create(
+                    receiver_teacher=t,
+                    receiver_type='T',
+                    information_type='T',
+                    information_state='N',
+                    information_content=bytes(I_NEW_FOLLOW % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), teacher.name, teacher.account), encoding="utf8"),
+                )
             except Teacher.DoesNotExist:
                 response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
                 return HttpResponse(json.dumps(response, ensure_ascii=False))
         if _student_id is not None:
             try:
-                u = Student.objects.get(student_id=_student_id).user
-                teacher.follows.add(u)
+                s = Student.objects.get(student_id=_student_id)
+                teacher.follows.add(s.user)
+                Information.objects.create(
+                    receiver_student=s,
+                    receiver_type='S',
+                    information_type='T',
+                    information_state='N',
+                    information_content=bytes(I_NEW_FOLLOW % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), teacher.name, teacher.account), encoding="utf8"),
+                )
             except Student.DoesNotExist:
                 response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
                 return HttpResponse(json.dumps(response, ensure_ascii=False))
@@ -129,15 +145,29 @@ def add_to_watch(request):
         student = Student.objects.get(user=user)
         if _teacher_id is not None:
             try:
-                u = Teacher.objects.get(teacher_id=_teacher_id).user
-                student.follows.add(u)
+                t = Teacher.objects.get(teacher_id=_teacher_id)
+                student.follows.add(t.user)
+                Information.objects.create(
+                    receiver_teacher=t,
+                    receiver_type='T',
+                    information_type='T',
+                    information_state='N',
+                    information_content=bytes(I_NEW_FOLLOW % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), student.name, student.account), encoding="utf8"),
+                )
             except Teacher.DoesNotExist:
                 response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
                 return HttpResponse(json.dumps(response, ensure_ascii=False))
         if (_student_id is not None) and (str(student.student_id) != _student_id):
             try:
-                u = Student.objects.get(student_id=_student_id).user
-                student.follows.add(u)
+                s = Student.objects.get(student_id=_student_id)
+                student.follows.add(s.user)
+                Information.objects.create(
+                    receiver_student=s,
+                    receiver_type='S',
+                    information_type='T',
+                    information_state='N',
+                    information_content=bytes(I_NEW_FOLLOW % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), student.name, student.account), encoding="utf8"),
+                )
             except Student.DoesNotExist:
                 response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
                 return HttpResponse(json.dumps(response, ensure_ascii=False))

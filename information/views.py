@@ -117,6 +117,13 @@ def set_information_state(request):
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
+#############################
+# 以下情况下会自动创建消息：
+#     1. 用户注册
+#     2. 用户密码修改
+#     3. 用户被关注
+#     4. 所关注用户发布意向
+#############################
 @post_required
 def create_information(request):
     # *** 参数获取 ***

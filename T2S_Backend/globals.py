@@ -7,12 +7,6 @@ N_RECOMMEND_MATCH_NUMBER = 4                    # 推荐匹配数量
 N_DEFAULT_GET_SEARCH_RECORD_NUMBER = 10         # 默认获取搜索记录数量
 N_DEFAULT_GET_HOT_SEARCH_RECORD_NUMBER = 10     # 默认获取热门搜索记录数量
 
-DEFAULT_HEAD_PICTURE_WIDTH = 96                         # 默认头像宽度
-DEFAULT_HEAD_PICTURE_HEIGHT = 96                        # 默认头像高度
-
-
-
-
 S_LOGON_SUCCEED = '[成功] 注册成功！'
 S_LOGIN_SUCCEED = '[成功] 登录成功！'
 S_LOGOUT_SUCCEED = '[成功] 注销成功！'
@@ -39,3 +33,7 @@ F_CREATE_FAIL = '[失败] 创建失败！'
 F_DELETE_FAIL = '[失败] 删除失败！'
 F_UPDATE_FAIL = '[失败] 修改失败！'
 F_NOT_IMPLEMENTED = '[失败] 功能未实现！'
+
+I_NEW_LOGIN = '【新用户|%s】新账户<%s>注册成功！欢迎您~'
+I_NEW_FOLLOW = '【新关注|%s】用户<%s(%s)>关注了您。'
+I_NEW_INTENTION = '【新意向|%s】您关注的用户<%s(%s)>发布了新的意向。'

@@ -1,3 +1,4 @@
+import datetime
 import json
 from io import StringIO
 from PIL import Image
@@ -9,6 +10,7 @@ from django.http import HttpResponse
 from T2S_Backend.decorators import *
 from T2S_Backend.globals import *
 from T2S_Backend.utils import *
+from information.models import Information
 from user.models import Teacher, Student
 
 
@@ -35,9 +37,23 @@ def logon(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # 创建关联教师/学生
     if _type == 'T':
-        Teacher.objects.create(user=user, account=_account, password=_password, name=_name)
+        teacher = Teacher.objects.create(user=user, account=_account, password=_password, name=_name)
+        Information.objects.create(
+            receiver_teacher=teacher,
+            receiver_type='T',
+            information_type='T',
+            information_state='N',
+            information_content=bytes(I_NEW_LOGIN % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), _account), encoding="utf8"),
+        )
     else:
-        Student.objects.create(user=user, account=_account, password=_password, name=_name)
+        student = Student.objects.create(user=user, account=_account, password=_password, name=_name)
+        Information.objects.create(
+            receiver_student=student,
+            receiver_type='S',
+            information_type='T',
+            information_state='N',
+            information_content=bytes(I_NEW_LOGIN % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), _account), encoding="utf8"),
+        )
     response = {'status': True, 'info': S_LOGON_SUCCEED}
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 

@@ -1,7 +1,9 @@
+import datetime
 import json
 from T2S_Backend.decorators import *
 from T2S_Backend.globals import *
 from T2S_Backend.utils import *
+from information.models import Information
 from user.models import Teacher, Student
 from intention.models import Recruitment, Application
 
@@ -97,6 +99,22 @@ def create_recruit_intention(request):
             intention_state=_intention_state,
             intention_picture=_intention_picture,
         )
+        for t in teacher.user.teacher_fans.all():
+            Information.objects.create(
+                receiver_teacher=t,
+                receiver_type='T',
+                information_type='T',
+                information_state='N',
+                information_content=bytes(I_NEW_INTENTION % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), teacher.name, teacher.account), encoding="utf8"),
+            )
+        for s in teacher.user.student_fans.all():
+            Information.objects.create(
+                receiver_student=s,
+                receiver_type='S',
+                information_type='T',
+                information_state='N',
+                information_content=bytes(I_NEW_INTENTION % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), teacher.name, teacher.account), encoding="utf8"),
+            )
         response = {'status': True, 'info': S_CREATE_SUCCEED}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     except Teacher.DoesNotExist:
@@ -253,6 +271,22 @@ def create_apply_intention(request):
             intention_state=_intention_state,
             intention_picture=_intention_picture,
         )
+        for t in student.user.teacher_fans.all():
+            Information.objects.create(
+                receiver_teacher=t,
+                receiver_type='T',
+                information_type='T',
+                information_state='N',
+                information_content=bytes(I_NEW_INTENTION % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), student.name, student.account), encoding="utf8"),
+            )
+        for s in student.user.student_fans.all():
+            Information.objects.create(
+                receiver_student=s,
+                receiver_type='S',
+                information_type='T',
+                information_state='N',
+                information_content=bytes(I_NEW_INTENTION % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), student.name, student.account), encoding="utf8"),
+            )
         response = {'status': True, 'info': S_CREATE_SUCCEED}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     except Student.DoesNotExist:
