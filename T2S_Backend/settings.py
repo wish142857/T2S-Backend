@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'imagekit',
     # Register apps here
     'user',
     'intention',
@@ -45,7 +46,6 @@ INSTALLED_APPS = [
     'follow',
     'search',
     'recommend',
-    'imagekit',
 ]
 
 MIDDLEWARE = [
