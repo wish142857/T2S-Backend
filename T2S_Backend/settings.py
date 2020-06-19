@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'follow',
     'search',
     'recommend',
+    'imagekit',
 ]
 
 MIDDLEWARE = [

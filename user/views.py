@@ -1,4 +1,7 @@
 import json
+from io import StringIO
+from PIL import Image
+
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.db import IntegrityError
@@ -530,7 +533,8 @@ def get_info_picture(request):
     if _type == 'T':
         try:
             teacher = Teacher.objects.get(teacher_id=_teacher_id)
-            return HttpResponse(teacher.picture.file, content_type='image/jpeg')
+            return HttpResponse(teacher.picture_128px.file, content_type='image/jpeg')
+            # return HttpResponse(teacher.picture.file, content_type='image/jpeg')
         except Teacher.DoesNotExist:
             response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
             return HttpResponse(json.dumps(response, ensure_ascii=False))
@@ -539,7 +543,8 @@ def get_info_picture(request):
     elif _type == 'S':
         try:
             student = Student.objects.get(student_id=_student_id)
-            return HttpResponse(student.picture.file, content_type='image/jpeg')
+            return HttpResponse(student.picture_128px.file, content_type='image/jpeg')
+            # return HttpResponse(student.picture.file, content_type='image/jpeg')
         except Student.DoesNotExist:
             response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
             return HttpResponse(json.dumps(response, ensure_ascii=False))
@@ -551,14 +556,16 @@ def get_info_picture(request):
             return HttpResponse(status=401)
         try:
             teacher = Teacher.objects.get(user=user)
-            return HttpResponse(teacher.picture.file, content_type='image/jpeg')
+            return HttpResponse(teacher.picture_128px.file, content_type='image/jpeg')
+            # return HttpResponse(teacher.picture.file, content_type='image/jpeg')
         except Teacher.DoesNotExist:
             pass
         except ValueError:
             return HttpResponse(None, content_type='image/jpeg')
         try:
             student = Student.objects.get(user=user)
-            return HttpResponse(student.picture.file, content_type='image/jpeg')
+            return HttpResponse(student.picture_128px.file, content_type='image/jpeg')
+            # return HttpResponse(student.picture.file, content_type='image/jpeg')
         except Student.DoesNotExist:
             pass
         except ValueError:

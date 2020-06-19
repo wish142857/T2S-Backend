@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from imagekit.models import ImageSpecField
+from pilkit.processors import ResizeToFill
 
 
 def custom_upload_path(instance, filename):
@@ -38,6 +40,13 @@ class Teacher(models.Model):
     research_achievements = models.CharField(max_length=51200)                      # 研究成果
     promotional_video_url = models.CharField(max_length=1024)                       # 宣传视频 URL
 
+    picture_128px = ImageSpecField(                                                 # 头像标准大小
+        source="picture",
+        processors=[ResizeToFill(128, 128)],    # 处理后的图像大小
+        format='JPEG',                          # 处理后的图片格式
+        options={'quality': 95}                 # 处理后的图片质量
+    )
+
 
 class Student(models.Model):
     GENDER_CHOICES = [('M', 'male'), ('F', 'female'), ('U', 'unknown')]
@@ -70,3 +79,10 @@ class Student(models.Model):
     research_interest = models.CharField(max_length=51200)                          # 研究兴趣
     research_experience = models.CharField(max_length=51200)                        # 研究经历
     promotional_video_url = models.CharField(max_length=1024)                       # 宣传视频 URL
+
+    picture_128px = ImageSpecField(                                                 # 头像标准大小
+        source="picture",
+        processors=[ResizeToFill(128, 128)],    # 处理后的图像大小
+        format='JPEG',                          # 处理后的图片格式
+        options={'quality': 95}                 # 处理后的图片质量
+    )

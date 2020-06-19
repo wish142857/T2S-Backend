@@ -2,10 +2,16 @@
 全局变量
 """
 
-N_RECOMMEND_RANDOM_NUMBER = 10
-N_RECOMMEND_MATCH_NUMBER = 4
-N_DEFAULT_GET_SEARCH_RECORD_NUMBER = 10
-N_DEFAULT_GET_HOT_SEARCH_RECORD_NUMBER = 10
+N_RECOMMEND_RANDOM_NUMBER = 10                  # 推荐随机数据数量
+N_RECOMMEND_MATCH_NUMBER = 4                    # 推荐匹配数量
+N_DEFAULT_GET_SEARCH_RECORD_NUMBER = 10         # 默认获取搜索记录数量
+N_DEFAULT_GET_HOT_SEARCH_RECORD_NUMBER = 10     # 默认获取热门搜索记录数量
+
+DEFAULT_HEAD_PICTURE_WIDTH = 96                         # 默认头像宽度
+DEFAULT_HEAD_PICTURE_HEIGHT = 96                        # 默认头像高度
+
+
+
 
 S_LOGON_SUCCEED = '[成功] 注册成功！'
 S_LOGIN_SUCCEED = '[成功] 登录成功！'

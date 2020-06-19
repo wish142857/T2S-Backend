@@ -2,9 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7d6e89dd-d3c2-47ea-91e0-8519c37521f2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/CACHE/images/picture/teachers/teacher-1/Head_niLPRlV/abf5b6fed6d61d6271ca809858aacf42.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/picture/teachers/teacher-1/Head.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/picture/teachers/teacher-1/Head_niLPRlV.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/picture/teachers/teacher-1/Head_r2adfDT.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Wish.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/Wish.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/T2S_Backend/globals.py" beforeDir="false" afterPath="$PROJECT_DIR$/T2S_Backend/globals.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/T2S_Backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/T2S_Backend/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.zip" beforeDir="false" afterPath="$PROJECT_DIR$/db.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -68,7 +76,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.build">
+  <component name="RunManager" selected="Django server.T2S_Backend">
     <configuration name="build" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="T2S_Backend" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -169,6 +177,7 @@
       <workItem from="1592471309913" duration="7101000" />
       <workItem from="1592486029740" duration="1584000" />
       <workItem from="1592497999263" duration="643000" />
+      <workItem from="1592556482924" duration="2959000" />
     </task>
     <servers />
   </component>
