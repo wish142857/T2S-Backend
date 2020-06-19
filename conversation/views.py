@@ -105,25 +105,76 @@ def get_new_messages(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
     user = request.user
+    s_messages = None
+    r_messages = None
     try:
         teacher = Teacher.objects.get(user=user)
-        message_id_list = [m.message_id for m in teacher.s_messages.filter(message_id__gt=_message_id)]
-        message_id_list.extend([m.message_id for m in teacher.r_messages.filter(message_id__gt=_message_id)])
-        message_id_list.sort()
-        response = {'status': True, 'info': S_QUERY_SUCCEED, 'message_id_list': message_id_list}
-        return HttpResponse(json.dumps(response, ensure_ascii=False))
+        s_messages = teacher.s_messages.filter(message_id__gt=_message_id)
+        r_messages = teacher.r_messages.filter(message_id__gt=_message_id)
     except Teacher.DoesNotExist:
         pass
     try:
         student = Student.objects.get(user=user)
-        message_id_list = [m.message_id for m in student.s_messages.filter(message_id__gt=_message_id)]
-        message_id_list.extend([m.message_id for m in student.r_messages.filter(message_id__gt=_message_id)])
-        message_id_list.sort()
-        response = {'status': True, 'info': S_QUERY_SUCCEED, 'message_id_list': message_id_list}
-        return HttpResponse(json.dumps(response, ensure_ascii=False))
+        s_messages = student.s_messages.filter(message_id__gt=_message_id)
+        r_messages = student.r_messages.filter(message_id__gt=_message_id)
     except Student.DoesNotExist:
         pass
-    response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+    if s_messages is None or r_messages is None:
+        response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    message_info_list = []
+    for message in s_messages:
+        message_info = {
+            'message_id': message.message_id,
+            'object_type': message.receiver_type,
+            'object_id': None,
+            'object_account': None,
+            'object_name': None,
+            'message_way': 'S',
+            'message_type': message.message_type,
+            'message_content': None,
+            'message_time': message.message_time.strftime('%Y-%m-%d %H:%M'),
+        }
+        if message_info['object_type'] == 'T':
+            message_info['object_id'] = message.receiver_teacher.teacher_id
+            message_info['object_account'] = message.receiver_teacher.account
+            message_info['object_name'] = message.receiver_teacher.name
+        else:
+            message_info['object_id'] = message.receiver_student.student_id
+            message_info['object_account'] = message.receiver_student.account
+            message_info['object_name'] = message.receiver_student.name
+        if message.message_type == 'T':
+            message_info['message_content'] = str(message.message_content, encoding="utf-8")
+        elif message.message_type == 'P':
+            message_info['message_content'] = '[图片]'
+        message_info_list.append(message_info)
+    for message in r_messages:
+        message_info = {
+            'message_id': message.message_id,
+            'object_type': message.sender_type,
+            'object_id': None,
+            'object_account': None,
+            'object_name': None,
+            'message_way': 'R',
+            'message_type': message.message_type,
+            'message_content': None,
+            'message_time': message.message_time.strftime('%Y-%m-%d %H:%M'),
+        }
+        if message_info['object_type'] == 'T':
+            message_info['object_id'] = message.sender_teacher.teacher_id
+            message_info['object_account'] = message.sender_teacher.account
+            message_info['object_name'] = message.sender_teacher.name
+        else:
+            message_info['object_id'] = message.sender_student.student_id
+            message_info['object_account'] = message.sender_student.account
+            message_info['object_name'] = message.sender_student.name
+        if message.message_type == 'T':
+            message_info['message_content'] = str(message.message_content, encoding="utf-8")
+        elif message.message_type == 'P':
+            message_info['message_content'] = '[图片]'
+        message_info_list.append(message_info)
+    message_info_list.sort(key=lambda m: m['message_id'])
+    response = {'status': True, 'info': S_QUERY_SUCCEED, 'message_info_list': message_info_list}
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
@@ -132,25 +183,76 @@ def get_new_messages(request):
 def get_all_messages(request):
     # *** 请求处理 ***
     user = request.user
+    s_messages = None
+    r_messages = None
     try:
         teacher = Teacher.objects.get(user=user)
-        message_id_list = [m.message_id for m in teacher.s_messages.all()]
-        message_id_list.extend([m.message_id for m in teacher.r_messages.all()])
-        message_id_list.sort()
-        response = {'status': True, 'info': S_QUERY_SUCCEED, 'message_id_list': message_id_list}
-        return HttpResponse(json.dumps(response, ensure_ascii=False))
+        s_messages = teacher.s_messages.all()
+        r_messages = teacher.r_messages.all()
     except Teacher.DoesNotExist:
         pass
     try:
         student = Student.objects.get(user=user)
-        message_id_list = [m.message_id for m in student.s_messages.all()]
-        message_id_list.extend([m.message_id for m in student.r_messages.all()])
-        message_id_list.sort()
-        response = {'status': True, 'info': S_QUERY_SUCCEED, 'message_id_list': message_id_list}
-        return HttpResponse(json.dumps(response, ensure_ascii=False))
+        s_messages = student.s_messages.all()
+        r_messages = student.r_messages.all()
     except Student.DoesNotExist:
         pass
-    response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+    if s_messages is None or r_messages is None:
+        response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    message_info_list = []
+    for message in s_messages:
+        message_info = {
+            'message_id': message.message_id,
+            'object_type': message.receiver_type,
+            'object_id': None,
+            'object_account': None,
+            'object_name': None,
+            'message_way': 'S',
+            'message_type': message.message_type,
+            'message_content': None,
+            'message_time': message.message_time.strftime('%Y-%m-%d %H:%M'),
+        }
+        if message_info['object_type'] == 'T':
+            message_info['object_id'] = message.receiver_teacher.teacher_id
+            message_info['object_account'] = message.receiver_teacher.account
+            message_info['object_name'] = message.receiver_teacher.name
+        else:
+            message_info['object_id'] = message.receiver_student.student_id
+            message_info['object_account'] = message.receiver_student.account
+            message_info['object_name'] = message.receiver_student.name
+        if message.message_type == 'T':
+            message_info['message_content'] = str(message.message_content, encoding="utf-8")
+        elif message.message_type == 'P':
+            message_info['message_content'] = '[图片]'
+        message_info_list.append(message_info)
+    for message in r_messages:
+        message_info = {
+            'message_id': message.message_id,
+            'object_type': message.sender_type,
+            'object_id': None,
+            'object_account': None,
+            'object_name': None,
+            'message_way': 'R',
+            'message_type': message.message_type,
+            'message_content': None,
+            'message_time': message.message_time.strftime('%Y-%m-%d %H:%M'),
+        }
+        if message_info['object_type'] == 'T':
+            message_info['object_id'] = message.sender_teacher.teacher_id
+            message_info['object_account'] = message.sender_teacher.account
+            message_info['object_name'] = message.sender_teacher.name
+        else:
+            message_info['object_id'] = message.sender_student.student_id
+            message_info['object_account'] = message.sender_student.account
+            message_info['object_name'] = message.sender_student.name
+        if message.message_type == 'T':
+            message_info['message_content'] = str(message.message_content, encoding="utf-8")
+        elif message.message_type == 'P':
+            message_info['message_content'] = '[图片]'
+        message_info_list.append(message_info)
+    message_info_list.sort(key=lambda m: m['message_id'])
+    response = {'status': True, 'info': S_QUERY_SUCCEED, 'message_info_list': message_info_list}
     return HttpResponse(json.dumps(response, ensure_ascii=False))
 
 
@@ -287,7 +389,6 @@ def get_message_detail(request):
 
 
 @get_required
-@login_required
 def get_message_picture(request):
     # *** 参数获取 ***
     _message_id = request.GET.get('message_id')
