@@ -1,5 +1,8 @@
 import datetime
 import json
+
+from django.contrib.auth.models import User
+
 from T2S_Backend.decorators import *
 from T2S_Backend.globals import *
 from T2S_Backend.utils import *
@@ -28,6 +31,7 @@ def get_recruit_intention(request):
 
 
 @get_required
+@login_required
 def get_recruit_intention_detail(request):
     # *** 参数获取 ***
     _recruitment_id = request.GET.get('recruitment_id')
@@ -36,6 +40,21 @@ def get_recruit_intention_detail(request):
         response = {'status': False, 'info': F_MISSING_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
+    # 获取用户关注列表
+    user = request.user
+    follow_list = None
+    try:
+        follow_list = Teacher.objects.get(user=user).follows
+    except Teacher.DoesNotExist:
+        pass
+    try:
+        follow_list = Student.objects.get(user=user).follows
+    except Student.DoesNotExist:
+        pass
+    if follow_list is None:
+        response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # 获取意向内容
     try:
         recruitment = Recruitment.objects.get(recruitment_id=_recruitment_id)
         response = {
@@ -46,7 +65,13 @@ def get_recruit_intention_detail(request):
             'research_fields': recruitment.research_fields,
             'introduction': recruitment.introduction,
             'intention_state': recruitment.intention_state,
+            'is_followed': False,
         }
+        try:
+            follow_list.get(username=recruitment.publisher.user.username)
+            response['is_followed'] = True
+        except User.DoesNotExist:
+            pass
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     except Recruitment.DoesNotExist:
         response = {'status': False, 'info': F_ERROR_NOT_FOUND}
@@ -206,6 +231,7 @@ def get_apply_intention(request):
 
 
 @get_required
+@login_required
 def get_apply_intention_detail(request):
     # *** 参数获取 ***
     _application_id = request.GET.get('application_id')
@@ -214,6 +240,21 @@ def get_apply_intention_detail(request):
         response = {'status': False, 'info': F_MISSING_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
+    # 获取用户关注列表
+    user = request.user
+    follow_list = None
+    try:
+        follow_list = Teacher.objects.get(user=user).follows
+    except Teacher.DoesNotExist:
+        pass
+    try:
+        follow_list = Student.objects.get(user=user).follows
+    except Student.DoesNotExist:
+        pass
+    if follow_list is None:
+        response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # 获取意向内容
     try:
         application = Application.objects.get(application_id=_application_id)
         response = {
@@ -222,7 +263,13 @@ def get_apply_intention_detail(request):
             'research_interests': application.research_interests,
             'introduction': application.introduction,
             'intention_state': application.intention_state,
+            'is_followed': False
         }
+        try:
+            follow_list.get(username=application.publisher.user.username)
+            response['is_followed'] = True
+        except User.DoesNotExist:
+            pass
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     except Application.DoesNotExist:
         response = {'status': False, 'info': F_ERROR_NOT_FOUND}
