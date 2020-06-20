@@ -396,30 +396,13 @@ def get_message_picture(request):
     if not check_necessary(_message_id):
         return HttpResponse(None, content_type='image/jpeg')
     # *** 请求处理 ***
-    user = request.user
     try:
         message = Message.objects.get(message_id=_message_id)
     except Message.DoesNotExist:
         return HttpResponse(None, content_type='image/jpeg')
     if not message.message_type == 'P':
         return HttpResponse(None, content_type='image/jpeg')
-    try:
-        teacher = Teacher.objects.get(user=user)
-        if message.sender_teacher == teacher or message.receiver_teacher == teacher:
-            return HttpResponse(message.message_content, content_type='image/jpeg')
-        else:
-            return HttpResponse(None, content_type='image/jpeg')
-    except Teacher.DoesNotExist:
-        pass
-    try:
-        student = Student.objects.get(user=user)
-        if message.sender_student == student or message.receiver_student == student:
-            return HttpResponse(message.message_content, content_type='image/jpeg')
-        else:
-            return HttpResponse(None, content_type='image/jpeg')
-    except Student.DoesNotExist:
-        pass
-    return HttpResponse(None, content_type='image/jpeg')
+    return HttpResponse(message.message_content, content_type='image/jpeg')
 
 
 @post_required
