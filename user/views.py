@@ -164,6 +164,13 @@ def change_password(request):
             user.save()
             teacher.password = _new_password
             teacher.save()
+            Information.objects.create(
+                receiver_teacher=teacher,
+                receiver_type='T',
+                information_type='T',
+                information_state='N',
+                information_content=bytes(I_NEW_PASSWORD % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), teacher.name, teacher.account), encoding="utf8"),
+            )
             response = {'status': True, 'info': S_CHANGE_PASSWORD_SUCCEED}
             return HttpResponse(json.dumps(response, ensure_ascii=False))
         else:
@@ -178,6 +185,13 @@ def change_password(request):
             user.save()
             student.password = _new_password
             student.save()
+            Information.objects.create(
+                receiver_student=student,
+                receiver_type='S',
+                information_type='T',
+                information_state='N',
+                information_content=bytes(I_NEW_PASSWORD % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), student.name, student.account), encoding="utf8"),
+            )
             response = {'status': True, 'info': S_CHANGE_PASSWORD_SUCCEED}
             return HttpResponse(json.dumps(response, ensure_ascii=False))
         else:
