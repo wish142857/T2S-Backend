@@ -31,6 +31,35 @@ def get_information(request):
 
 @get_required
 @login_required
+def get_new_information(request):
+    # *** 参数获取 ***
+    _information_id = request.GET.get('information_id')
+    # *** 合法性检测 ***
+    if not check_necessary(_information_id):
+        response = {'status': False, 'info': F_MISSING_PARAMETER}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    # *** 请求处理 ***
+    user = request.user
+    try:
+        teacher = Teacher.objects.get(user=user)
+        information_id_list = [i.information_id for i in teacher.information_set.all() if i.information_id > _information_id]
+        response = {'status': True, 'info': S_QUERY_SUCCEED, 'information_id_list': information_id_list}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    except Teacher.DoesNotExist:
+        pass
+    try:
+        student = Student.objects.get(user=user)
+        information_id_list = [i.information_id for i in student.information_set.all() if i.information_id > _information_id]
+        response = {'status': True, 'info': S_QUERY_SUCCEED, 'information_id_list': information_id_list}
+        return HttpResponse(json.dumps(response, ensure_ascii=False))
+    except Student.DoesNotExist:
+        pass
+    response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
+    return HttpResponse(json.dumps(response, ensure_ascii=False))
+
+
+@get_required
+@login_required
 def get_information_detail(request):
     # *** 参数获取 ***
     _information_id = request.GET.get('information_id')

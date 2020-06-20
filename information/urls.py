@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('get_information', views.get_information, name='get_information'),
+    path('get_new_information', views.get_new_information, name='get_new_information'),
     path('get_information_detail', views.get_information_detail, name='get_information_detail'),
     path('set_information_state', views.set_information_state, name='set_information_state'),
 
