@@ -257,11 +257,19 @@ def search_recruit_intention(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     try:
         teacher = Teacher.objects.get(user=user)
+        follow_list = teacher.follows
         recruitment_info_list = []
         for r in recruitments.all():
-            recruitment_info = {'recruitment_id': r.recruitment_id, 'teacher_id': r.publisher.teacher_id, 'teacher_name': r.publisher.name, 'teacher_school': r.publisher.school,
-                                'teacher_department': r.publisher.department, 'recruitment_type': r.recruitment_type, 'recruitment_number': r. recruitment_number,
-                                'research_fields': r.research_fields, 'intention_state': r.intention_state, 'match_degree': calculate_match_degree_t2r(teacher, r)}
+            recruitment_info = {'recruitment_id': r.recruitment_id, 'teacher_id': r.publisher.teacher_id, 'teacher_name': r.publisher.name,
+                                'teacher_school': r.publisher.school, 'teacher_department': r.publisher.department, 'auth_state': r.publisher.auth_state,
+                                'fans_number': r.publisher.user.teacher_fans.count() + r.publisher.user.student_fans.count(), 'is_followed': False,
+                                'recruitment_type': r.recruitment_type, 'recruitment_number': r. recruitment_number, 'research_fields': r.research_fields,
+                                'intention_state': r.intention_state, 'match_degree': calculate_match_degree_t2r(teacher, r)}
+            try:
+                follow_list.get(username=r.publisher.user.username)
+                recruitment_info['is_followed'] = True
+            except User.DoesNotExist:
+                pass
             recruitment_info_list.append(recruitment_info)
         response = {'status': True, 'info': S_SEARCH_SUCCEED, 'recruitment_info_list': recruitment_info_list}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
@@ -269,11 +277,19 @@ def search_recruit_intention(request):
         pass
     try:
         student = Student.objects.get(user=user)
+        follow_list = student.follows
         recruitment_info_list = []
         for r in recruitments.all():
-            recruitment_info = {'recruitment_id': r.recruitment_id, 'teacher_id': r.publisher.teacher_id, 'teacher_name': r.publisher.name, 'teacher_school': r.publisher.school,
-                                'teacher_department': r.publisher.department, 'recruitment_type': r.recruitment_type, 'recruitment_number': r.recruitment_number,
-                                'research_fields': r.research_fields, 'intention_state': r.intention_state, 'match_degree': calculate_match_degree_s2r(student, r)}
+            recruitment_info = {'recruitment_id': r.recruitment_id, 'teacher_id': r.publisher.teacher_id, 'teacher_name': r.publisher.name,
+                                'teacher_school': r.publisher.school, 'teacher_department': r.publisher.department, 'auth_state': r.publisher.auth_state,
+                                'fans_number': r.publisher.user.teacher_fans.count() + r.publisher.user.student_fans.count(), 'is_followed': False,
+                                'recruitment_type': r.recruitment_type, 'recruitment_number': r.recruitment_number, 'research_fields': r.research_fields,
+                                'intention_state': r.intention_state, 'match_degree': calculate_match_degree_s2r(student, r)}
+            try:
+                follow_list.get(username=r.publisher.user.username)
+                recruitment_info['is_followed'] = True
+            except User.DoesNotExist:
+                pass
             recruitment_info_list.append(recruitment_info)
         response = {'status': True, 'info': S_SEARCH_SUCCEED, 'recruitment_info_list': recruitment_info_list}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
@@ -311,11 +327,18 @@ def search_apply_intention(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     try:
         teacher = Teacher.objects.get(user=user)
+        follow_list = teacher.follows
         application_info_list = []
         for a in applications.all():
-            application_info = {'application_id': a.application_id, 'student_id': a.publisher.student_id, 'student_name': a.publisher.name, 'student_school': a.publisher.school,
-                                'student_department': a.publisher.department, 'research_interests': a.research_interests,
-                                'intention_state': a. intention_state, 'match_degree': calculate_match_degree_t2a(teacher, a)}
+            application_info = {'application_id': a.application_id, 'student_id': a.publisher.student_id, 'student_name': a.publisher.name,
+                                'student_school': a.publisher.school, 'student_department': a.publisher.department, 'auth_state': a.publisher.auth_state,
+                                'fans_number': a.publisher.user.teacher_fans.count() + a.publisher.user.student_fans.count(), 'is_followed': False,
+                                'research_interests': a.research_interests, 'intention_state': a. intention_state, 'match_degree': calculate_match_degree_t2a(teacher, a)}
+            try:
+                follow_list.get(username=a.publisher.user.username)
+                application_info['is_followed'] = True
+            except User.DoesNotExist:
+                pass
             application_info_list.append(application_info)
         response = {'status': True, 'info': S_SEARCH_SUCCEED, 'application_info_list': application_info_list}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
@@ -323,11 +346,18 @@ def search_apply_intention(request):
         pass
     try:
         student = Student.objects.get(user=user)
+        follow_list = student.follows
         application_info_list = []
         for a in applications.all():
-            application_info = {'application_id': a.application_id, 'student_id': a.publisher.student_id, 'student_name': a.publisher.name, 'student_school': a.publisher.school,
-                                'student_department': a.publisher.department, 'research_interests': a.research_interests,
-                                'intention_state': a. intention_state, 'match_degree': calculate_match_degree_s2a(student, a)}
+            application_info = {'application_id': a.application_id, 'student_id': a.publisher.student_id, 'student_name': a.publisher.name,
+                                'student_school': a.publisher.school, 'student_department': a.publisher.department, 'auth_state': a.publisher.auth_state,
+                                'fans_number': a.publisher.user.teacher_fans.count() + a.publisher.user.student_fans.count(), 'is_followed': False,
+                                'research_interests': a.research_interests, 'intention_state': a. intention_state, 'match_degree': calculate_match_degree_s2a(student, a)}
+            try:
+                follow_list.get(username=a.publisher.user.username)
+                application_info['is_followed'] = True
+            except User.DoesNotExist:
+                pass
             application_info_list.append(application_info)
         response = {'status': True, 'info': S_SEARCH_SUCCEED, 'application_info_list': application_info_list}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
