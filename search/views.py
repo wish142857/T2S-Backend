@@ -97,17 +97,25 @@ def search_teacher(request):
         response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # 进行关键字搜索
-    try:
-        search_record = SearchRecord.objects.get(owner_user=user, search_key=_key)
-        search_record.search_time = timezone.now()
-        search_record.save()
-    except SearchRecord.DoesNotExist:
-        SearchRecord.objects.create(owner_user=user, search_key=_key, search_time=timezone.now())
+    keys = _key.split()
+    for key in keys:
+        try:
+            search_record = SearchRecord.objects.get(owner_user=user, search_key=key)
+            search_record.search_time = timezone.now()
+            search_record.save()
+        except SearchRecord.DoesNotExist:
+            SearchRecord.objects.create(owner_user=user, search_key=key, search_time=timezone.now())
     teachers = Teacher.objects.filter(
-        Q(account__icontains=_key) | Q(name__icontains=_key) |
-        Q(school__icontains=_key) | Q(department__icontains=_key) |
-        Q(introduction__icontains=_key) | Q(research_fields__icontains=_key)
+        Q(account__icontains=keys[0]) | Q(name__icontains=keys[0]) |
+        Q(school__icontains=keys[0]) | Q(department__icontains=keys[0]) |
+        Q(introduction__icontains=keys[0]) | Q(research_fields__icontains=keys[0])
     )
+    for key in keys[1:]:
+        teachers = teachers | Teacher.objects.filter(
+            Q(account__icontains=key) | Q(name__icontains=key) |
+            Q(school__icontains=key) | Q(department__icontains=key) |
+            Q(introduction__icontains=key) | Q(research_fields__icontains=key)
+        )
     if teachers.all().count() == 0:
         response = {'status': False, 'info': F_ERROR_NOT_FOUND}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
@@ -177,17 +185,25 @@ def search_student(request):
         response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # 进行关键字搜索
-    try:
-        search_record = SearchRecord.objects.get(owner_user=user, search_key=_key)
-        search_record.search_time = timezone.now()
-        search_record.save()
-    except SearchRecord.DoesNotExist:
-        SearchRecord.objects.create(owner_user=user, search_key=_key, search_time=timezone.now())
+    keys = _key.split()
+    for key in keys:
+        try:
+            search_record = SearchRecord.objects.get(owner_user=user, search_key=key)
+            search_record.search_time = timezone.now()
+            search_record.save()
+        except SearchRecord.DoesNotExist:
+            SearchRecord.objects.create(owner_user=user, search_key=key, search_time=timezone.now())
     students = Student.objects.filter(
-        Q(account__icontains=_key) | Q(name__icontains=_key) |
-        Q(school__icontains=_key) | Q(department__icontains=_key) | Q(major__icontains=_key) |
-        Q(introduction__icontains=_key) | Q(research_experience__icontains=_key)
+        Q(account__icontains=keys[0]) | Q(name__icontains=keys[0]) |
+        Q(school__icontains=keys[0]) | Q(department__icontains=keys[0]) | Q(major__icontains=keys[0]) |
+        Q(introduction__icontains=keys[0]) | Q(research_experience__icontains=keys[0])
     )
+    for key in keys[1:]:
+        students = students | Student.objects.filter(
+            Q(account__icontains=key) | Q(name__icontains=key) |
+            Q(school__icontains=key) | Q(department__icontains=key) | Q(major__icontains=key) |
+            Q(introduction__icontains=key) | Q(research_experience__icontains=key)
+        )
     if students.all().count() == 0:
         response = {'status': False, 'info': F_ERROR_NOT_FOUND}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
@@ -243,15 +259,21 @@ def search_recruit_intention(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
     user = request.user
-    try:
-        search_record = SearchRecord.objects.get(owner_user=user, search_key=_key)
-        search_record.search_time = timezone.now()
-        search_record.save()
-    except SearchRecord.DoesNotExist:
-        SearchRecord.objects.create(owner_user=user, search_key=_key, search_time=timezone.now())
+    keys = _key.split()
+    for key in keys:
+        try:
+            search_record = SearchRecord.objects.get(owner_user=user, search_key=key)
+            search_record.search_time = timezone.now()
+            search_record.save()
+        except SearchRecord.DoesNotExist:
+            SearchRecord.objects.create(owner_user=user, search_key=key, search_time=timezone.now())
     recruitments = Recruitment.objects.filter(
-        Q(research_fields__icontains=_key) | Q(introduction__icontains=_key)
+        Q(research_fields__icontains=keys[0]) | Q(introduction__icontains=keys[0])
     )
+    for key in keys[1:]:
+        recruitments = recruitments | Recruitment.objects.filter(
+            Q(research_fields__icontains=key) | Q(introduction__icontains=key)
+        )
     if recruitments.all().count() == 0:
         response = {'status': False, 'info': F_ERROR_NOT_FOUND}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
@@ -313,15 +335,21 @@ def search_apply_intention(request):
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
     user = request.user
-    try:
-        search_record = SearchRecord.objects.get(owner_user=user, search_key=_key)
-        search_record.search_time = timezone.now()
-        search_record.save()
-    except SearchRecord.DoesNotExist:
-        SearchRecord.objects.create(owner_user=user, search_key=_key, search_time=timezone.now())
+    keys = _key.split()
+    for key in keys:
+        try:
+            search_record = SearchRecord.objects.get(owner_user=user, search_key=key)
+            search_record.search_time = timezone.now()
+            search_record.save()
+        except SearchRecord.DoesNotExist:
+            SearchRecord.objects.create(owner_user=user, search_key=key, search_time=timezone.now())
     applications = Application.objects.filter(
-        Q(research_interests__icontains=_key) | Q(introduction__icontains=_key)
+        Q(research_interests__icontains=keys[0]) | Q(introduction__icontains=keys[0])
     )
+    for key in keys:
+        applications = applications | Application.objects.filter(
+            Q(research_interests__icontains=key) | Q(introduction__icontains=key)
+        )
     if applications.all().count() == 0:
         response = {'status': False, 'info': F_ERROR_NOT_FOUND}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
