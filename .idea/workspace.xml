@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/T2S_Backend/build.py" beforeDir="false" afterPath="$PROJECT_DIR$/T2S_Backend/build.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.zip" beforeDir="false" afterPath="$PROJECT_DIR$/db.zip" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -180,7 +181,8 @@
       <workItem from="1592659793402" duration="806000" />
       <workItem from="1592669214937" duration="983000" />
       <workItem from="1592705368874" duration="2070000" />
-      <workItem from="1592708652357" duration="8129000" />
+      <workItem from="1592708652357" duration="9184000" />
+      <workItem from="1592723889661" duration="1173000" />
     </task>
     <servers />
   </component>
@@ -204,7 +206,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/T2S_Backend$build.coverage" NAME="build Coverage Results" MODIFIED="1592717876416" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/T2S_Backend" />
+    <SUITE FILE_PATH="coverage/T2S_Backend$build.coverage" NAME="build Coverage Results" MODIFIED="1592724453063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/T2S_Backend" />
     <SUITE FILE_PATH="coverage/T2S_Backend$utils.coverage" NAME="utils Coverage Results" MODIFIED="1592399503606" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/T2S_Backend" />
   </component>
 </project>

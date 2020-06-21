@@ -6,12 +6,12 @@ import requests
 '''
 
 SERVER_HOST = "http://127.0.0.1:8000"
-TEACHER_NUMBER = 20  # 创建导师用户数量
-STUDENT_NUMBER = 20  # 创建学生用户数量
+TEACHER_NUMBER = 40  # 创建导师用户数量
+STUDENT_NUMBER = 40  # 创建学生用户数量
 FOLLOW_NUMBER = 5  # 创建关注关系数量/每个用户/分别对导师或学生
 INTENTION_NUMBER = 2  # 创建意向数量/每个用户
 MESSAGE_NUMBER = 5  # 创建消息数量/每个用户
-DEFAULT_STRING = 'Empty'  # 默认填充字符串
+DEFAULT_STRING = '这是一句消息'  # 默认填充字符串
 DEFAULT_PASSWORD = 'P12345'  # 默认密码
 DEFAULT_SIGNATURE = '这是一段签名。'  # 默认签名
 DEFAULT_PHONE = '1XXXXXXXXXX'  # 默认电话
@@ -38,7 +38,10 @@ def build_teacher():
     # *** 数据初始化 ***
     s_number = 0
     f_number = 0
-    name = ['李', '王', '张', '刘', '陈', '杨', '赵', '黄', '周', '吴', '徐', '孙', '胡', '朱', '高', '林', '何', '郭', '马', '田', '从']
+    name = ['李', '王', '张', '刘', '陈', '杨', '赵', '黄', '周', '吴',
+            '徐', '孙', '胡', '朱', '高', '林', '何', '郭', '马', '罗',
+            '梁', '宋', '郑', '谢', '韩', '唐', '冯', '于', '董', '萧',
+            '程', '曹', '袁', '邓', '许', '傅', '沈', '曾', '彭', '吕']
     # *** 创建导师 ***
     print('>>> 【开始】正在随机生成导师数据...')
     for i in range(TEACHER_NUMBER):
@@ -88,7 +91,10 @@ def build_student():
     # *** 数据初始化 ***
     s_number = 0
     f_number = 0
-    name = ['李', '王', '张', '刘', '陈', '杨', '赵', '黄', '周', '吴', '徐', '孙', '胡', '朱', '高', '林', '何', '郭', '马', '田', '从']
+    name = ['李', '王', '张', '刘', '陈', '杨', '赵', '黄', '周', '吴',
+            '徐', '孙', '胡', '朱', '高', '林', '何', '郭', '马', '罗',
+            '梁', '宋', '郑', '谢', '韩', '唐', '冯', '于', '董', '萧',
+            '程', '曹', '袁', '邓', '许', '傅', '沈', '曾', '彭', '吕']
     # *** 创建学生 ***
     print('>>> 【开始】正在随机生成学生数据...')
     for i in range(STUDENT_NUMBER):
@@ -159,6 +165,7 @@ def build_follow():
                 f_number = f_number + 1
         # 注销
         POST('/api/user/logout', {}, cookies)
+        print('>>> 【完毕】导师%s生成关注关系完毕！' % ('T' + str(t)))
     print('>>> 【结束】随机生成导师关注关系完毕: 成功 %d/%d 个。' % (s_number, s_number + f_number))
     # *** 创建学生关注关系 ***
     print('>>> 【开始】正在生成学生关注关系...')
@@ -182,6 +189,7 @@ def build_follow():
                 f_number = f_number + 1
         # 注销
         POST('/api/user/logout', {}, cookies)
+        print('>>> 【完毕】学生%s生成关注关系完毕！' % ('S' + str(s)))
     print('>>> 【结束】随机生成学生关注关系完毕: 成功 %d/%d 个。' % (s_number, s_number + f_number))
 
 
@@ -209,6 +217,7 @@ def build_intention():
                 f_number = f_number + 1
         # 注销
         POST('/api/user/logout', {}, cookies)
+        print('>>> 【完毕】导师%s生成招收意向完毕！' % ('T' + str(t)))
     print('>>> 【结束】随机生成导师招收意向完毕: 成功 %d/%d 个。' % (s_number, s_number + f_number))
     # *** 创建学生申请意向 ***
     print('>>> 【开始】正在生成学生申请意向...')
@@ -232,6 +241,7 @@ def build_intention():
                 f_number = f_number + 1
         # 注销
         POST('/api/user/logout', {}, cookies)
+        print('>>> 【完毕】学生%s生成申请意向完毕！' % ('S' + str(s)))
     print('>>> 【结束】随机生成学生申请意向完毕: 成功 %d/%d 个。' % (s_number, s_number + f_number))
 
 
@@ -262,6 +272,7 @@ def build_conversation():
                 f_number = f_number + 1
         # 注销
         POST('/api/user/logout', {}, cookies)
+        print('>>> 【完毕】导师%s生成会话消息完毕！' % ('T' + str(t)))
     print('>>> 【结束】随机生成导师会话消息完毕: 成功 %d/%d 个。' % (s_number, s_number + f_number))
     # *** 创建学生会话消息 ***
     print('>>> 【开始】正在生成学生会话消息...')
@@ -289,6 +300,7 @@ def build_conversation():
                 f_number = f_number + 1
         # 注销
         POST('/api/user/logout', {}, cookies)
+        print('>>> 【完毕】学生%s生成会话消息完毕！' % ('S' + str(s)))
     print('>>> 【结束】随机生成学生会话消息完毕: 成功 %d/%d 个。' % (s_number, s_number + f_number))
 
 
@@ -326,12 +338,12 @@ def get_random_gender() -> str:
 
 def get_random_school() -> str:
     return random.choice(['北京大学', '清华大学', '复旦大学', '上海交通大学',
-                           '南京大学', '浙江大学', '中国科学技术大学', '哈尔滨工业大学', '西安交通大学'])
+                          '南京大学', '浙江大学', '中国科学技术大学', '哈尔滨工业大学', '西安交通大学'])
 
 
 def get_random_department() -> str:
     return random.choice(['哲学院', '经济学院', '法学院', '教育学院', '文学院', '历史学院',
-                           '理学院', '工学院', '农学院', '医学院', '军事学院', '管理学院', '艺术学院'])
+                          '理学院', '工学院', '农学院', '医学院', '军事学院', '管理学院', '艺术学院'])
 
 
 def get_random_title() -> str:
@@ -340,7 +352,7 @@ def get_random_title() -> str:
 
 def get_random_major() -> str:
     return random.choice(['哲学', '经济学', '法学', '教育学', '文学', '历史学',
-                           '理学', '工学', '农学', '医学', '军事学', '管理学', '艺术学'])
+                          '理学', '工学', '农学', '医学', '军事学', '管理学', '艺术学'])
 
 
 def get_random_degree() -> str:
