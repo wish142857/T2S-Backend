@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="7d6e89dd-d3c2-47ea-91e0-8519c37521f2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/T2S_Backend/build.py" beforeDir="false" afterPath="$PROJECT_DIR$/T2S_Backend/build.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.zip" beforeDir="false" afterPath="$PROJECT_DIR$/db.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/T2S_Backend/globals.py" beforeDir="false" afterPath="$PROJECT_DIR$/T2S_Backend/globals.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/information/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/information/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/intention/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/intention/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -69,7 +69,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.build">
+  <component name="RunManager" selected="Django server.T2S_Backend">
     <configuration name="build" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="T2S_Backend" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -183,6 +183,8 @@
       <workItem from="1592705368874" duration="2070000" />
       <workItem from="1592708652357" duration="9184000" />
       <workItem from="1592723889661" duration="1173000" />
+      <workItem from="1592735106068" duration="3404000" />
+      <workItem from="1592748596187" duration="1068000" />
     </task>
     <servers />
   </component>

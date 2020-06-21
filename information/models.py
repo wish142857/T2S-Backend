@@ -11,7 +11,7 @@ class Information(models.Model):
     receiver_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True)  # 接收老师
     receiver_student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True)  # 接收学生
 
-    receiver_type = models.CharField(                           # 接受者类型
+    receiver_type = models.CharField(                           # 接收者类型
         max_length=1, choices=RECEIVER_TYPE_CHOICES, null=False)
     information_type = models.CharField(                        # 信息类型
         max_length=1, choices=INFORMATION_TYPE_CHOICES, default='T')

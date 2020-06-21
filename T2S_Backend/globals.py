@@ -36,5 +36,5 @@ F_NOT_IMPLEMENTED = '[失败] 功能未实现！'
 
 I_NEW_LOGIN = '【新用户|%s】\n新账户<%s>注册成功！欢迎您~'
 I_NEW_FOLLOW = '【新关注|%s】\n用户<%s(%s)>关注了您。'
-I_NEW_INTENTION = '【新意向|%s】\n您关注的用户<%s(%s)>发布了新的意向。'
+I_NEW_INTENTION = '【新意向|%s】\n您关注的用户<%s(%s)>更新了意向。'
 I_NEW_PASSWORD = '【新密码|%s】\n您的账户<%s(%s)>密码已成功修改。'

@@ -124,22 +124,6 @@ def create_recruit_intention(request):
             intention_state=_intention_state,
             intention_picture=_intention_picture,
         )
-        for t in teacher.user.teacher_fans.all():
-            Information.objects.create(
-                receiver_teacher=t,
-                receiver_type='T',
-                information_type='T',
-                information_state='N',
-                information_content=bytes(I_NEW_INTENTION % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), teacher.name, teacher.account), encoding="utf8"),
-            )
-        for s in teacher.user.student_fans.all():
-            Information.objects.create(
-                receiver_student=s,
-                receiver_type='S',
-                information_type='T',
-                information_state='N',
-                information_content=bytes(I_NEW_INTENTION % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), teacher.name, teacher.account), encoding="utf8"),
-            )
         response = {'status': True, 'info': S_CREATE_SUCCEED}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     except Teacher.DoesNotExist:
@@ -318,22 +302,6 @@ def create_apply_intention(request):
             intention_state=_intention_state,
             intention_picture=_intention_picture,
         )
-        for t in student.user.teacher_fans.all():
-            Information.objects.create(
-                receiver_teacher=t,
-                receiver_type='T',
-                information_type='T',
-                information_state='N',
-                information_content=bytes(I_NEW_INTENTION % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), student.name, student.account), encoding="utf8"),
-            )
-        for s in student.user.student_fans.all():
-            Information.objects.create(
-                receiver_student=s,
-                receiver_type='S',
-                information_type='T',
-                information_state='N',
-                information_content=bytes(I_NEW_INTENTION % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), student.name, student.account), encoding="utf8"),
-            )
         response = {'status': True, 'info': S_CREATE_SUCCEED}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     except Student.DoesNotExist:
@@ -407,6 +375,22 @@ def clear_all_intention(request):
     try:
         teacher = Teacher.objects.get(user=user)
         Recruitment.objects.filter(publisher=teacher).delete()
+        for t in user.teacher_fans.all():
+            Information.objects.create(
+                receiver_teacher=t,
+                receiver_type='T',
+                information_type='T',
+                information_state='N',
+                information_content=bytes(I_NEW_INTENTION % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), teacher.name, teacher.account), encoding="utf8"),
+            )
+        for s in user.student_fans.all():
+            Information.objects.create(
+                receiver_student=s,
+                receiver_type='S',
+                information_type='T',
+                information_state='N',
+                information_content=bytes(I_NEW_INTENTION % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), teacher.name, teacher.account), encoding="utf8"),
+            )
         response = {'status': True, 'info': S_DELETE_SUCCEED}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     except Teacher.DoesNotExist:
@@ -414,6 +398,22 @@ def clear_all_intention(request):
     try:
         student = Student.objects.get(user=user)
         Application.objects.filter(publisher=student).delete()
+        for t in user.teacher_fans.all():
+            Information.objects.create(
+                receiver_teacher=t,
+                receiver_type='T',
+                information_type='T',
+                information_state='N',
+                information_content=bytes(I_NEW_INTENTION % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), student.name, student.account), encoding="utf8"),
+            )
+        for s in user.student_fans.all():
+            Information.objects.create(
+                receiver_student=s,
+                receiver_type='S',
+                information_type='T',
+                information_state='N',
+                information_content=bytes(I_NEW_INTENTION % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), student.name, student.account), encoding="utf8"),
+            )
         response = {'status': True, 'info': S_DELETE_SUCCEED}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     except Student.DoesNotExist:
