@@ -19,4 +19,3 @@ class Information(models.Model):
         max_length=1, choices=INFORMATION_STATE_CHOICES, default='N')
     information_content = models.BinaryField()                  # 信息内容
     information_time = models.DateTimeField(auto_now_add=True)  # 信息时间
-

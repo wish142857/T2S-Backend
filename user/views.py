@@ -394,6 +394,8 @@ def get_info_plus(request):
                 'research_fields': teacher.research_fields,
                 'research_achievements': teacher.research_achievements,
                 'promotional_video_url': teacher.promotional_video_url,
+                'follow_number': teacher.follows.count(),
+                'fan_number': teacher.user.teacher_fans.count() + teacher.user.student_fans.count(),
             }
             return HttpResponse(json.dumps(response, ensure_ascii=False))
         except Teacher.DoesNotExist:
@@ -414,6 +416,8 @@ def get_info_plus(request):
                 'research_interest': student.research_interest,
                 'research_experience': student.research_experience,
                 'promotional_video_url': student.promotional_video_url,
+                'follow_number': student.follows.count(),
+                'fan_number': student.user.teacher_fans.count() + student.user.student_fans.count(),
             }
             return HttpResponse(json.dumps(response, ensure_ascii=False))
         except Student.DoesNotExist:
@@ -439,6 +443,8 @@ def get_info_plus(request):
                 'promotional_video_url': teacher.promotional_video_url,
                 'teacher_number': teacher.teacher_number,
                 'id_number': teacher.id_number,
+                'follow_number': teacher.follows.count(),
+                'fan_number': teacher.user.teacher_fans.count() + teacher.user.student_fans.count(),
             }
             return HttpResponse(json.dumps(response, ensure_ascii=False))
         except Teacher.DoesNotExist:
@@ -459,6 +465,8 @@ def get_info_plus(request):
                 'promotional_video_url': student.promotional_video_url,
                 'student_number': student.student_number,
                 'id_number': student.id_number,
+                'follow_number': student.follows.count(),
+                'fan_number': student.user.teacher_fans.count() + student.user.student_fans.count(),
             }
             return HttpResponse(json.dumps(response, ensure_ascii=False))
         except Student.DoesNotExist:
