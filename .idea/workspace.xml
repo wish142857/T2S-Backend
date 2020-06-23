@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7d6e89dd-d3c2-47ea-91e0-8519c37521f2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/search/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/T2S_Backend/build.py" beforeDir="false" afterPath="$PROJECT_DIR$/T2S_Backend/build.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -191,6 +191,7 @@
       <workItem from="1592883323794" duration="1002000" />
       <workItem from="1592892575739" duration="374000" />
       <workItem from="1592903718171" duration="852000" />
+      <workItem from="1592904995451" duration="3784000" />
     </task>
     <servers />
   </component>

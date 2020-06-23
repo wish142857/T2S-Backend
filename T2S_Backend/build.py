@@ -75,7 +75,7 @@ def build_teacher():
             f_number = f_number + 1
             continue
         # * 用户认证 *
-        param = {'student_number': '2017', 'id_number': random.choice(['2017', '2018'])}
+        param = {'teacher_number': '2017', 'id_number': random.choice(['2017', '2018'])}
         POST('/api/user/user_auth', param, cookies)
         # * 注销 *
         if not OK(POST('/api/user/logout', {}, cookies)):
