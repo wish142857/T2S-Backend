@@ -59,7 +59,6 @@ def logon(request):
 
 
 @post_required
-@logout_required
 def login(request):
     # *** 参数获取 ***
     _type = request.POST.get('type')
@@ -73,7 +72,10 @@ def login(request):
         response = {'status': False, 'info': F_ERROR_PARAMETER}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
     # *** 请求处理 ***
-    # 查找用户
+    # 用户注销
+    if request.user.is_authenticated:
+        auth.logout(request)
+    # 用户查找
     try:
         user = auth.authenticate(username=_account, password=_password)
         if user is None:
