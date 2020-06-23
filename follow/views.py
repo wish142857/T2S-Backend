@@ -118,7 +118,7 @@ def add_to_watch(request):
                     receiver_type='T',
                     information_type='T',
                     information_state='N',
-                    information_content=bytes(I_NEW_FOLLOW % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), teacher.name, teacher.account), encoding="utf8"),
+                    information_content=bytes(I_NEW_FOLLOW % (teacher.name, teacher.account), encoding="utf8"),
                 )
             except Teacher.DoesNotExist:
                 response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
@@ -132,7 +132,7 @@ def add_to_watch(request):
                     receiver_type='S',
                     information_type='T',
                     information_state='N',
-                    information_content=bytes(I_NEW_FOLLOW % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), teacher.name, teacher.account), encoding="utf8"),
+                    information_content=bytes(I_NEW_FOLLOW % (teacher.name, teacher.account), encoding="utf8"),
                 )
             except Student.DoesNotExist:
                 response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
@@ -152,7 +152,7 @@ def add_to_watch(request):
                     receiver_type='T',
                     information_type='T',
                     information_state='N',
-                    information_content=bytes(I_NEW_FOLLOW % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), student.name, student.account), encoding="utf8"),
+                    information_content=bytes(I_NEW_FOLLOW % (student.name, student.account), encoding="utf8"),
                 )
             except Teacher.DoesNotExist:
                 response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}
@@ -166,7 +166,7 @@ def add_to_watch(request):
                     receiver_type='S',
                     information_type='T',
                     information_state='N',
-                    information_content=bytes(I_NEW_FOLLOW % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), student.name, student.account), encoding="utf8"),
+                    information_content=bytes(I_NEW_FOLLOW % (student.name, student.account), encoding="utf8"),
                 )
             except Student.DoesNotExist:
                 response = {'status': False, 'info': F_ERROR_UNKNOWN_USER}

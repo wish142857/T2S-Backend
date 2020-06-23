@@ -381,7 +381,7 @@ def clear_all_intention(request):
                 receiver_type='T',
                 information_type='T',
                 information_state='N',
-                information_content=bytes(I_NEW_INTENTION % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), teacher.name, teacher.account), encoding="utf8"),
+                information_content=bytes(I_NEW_INTENTION % (teacher.name, teacher.account), encoding="utf8"),
             )
         for s in user.student_fans.all():
             Information.objects.create(
@@ -389,7 +389,7 @@ def clear_all_intention(request):
                 receiver_type='S',
                 information_type='T',
                 information_state='N',
-                information_content=bytes(I_NEW_INTENTION % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), teacher.name, teacher.account), encoding="utf8"),
+                information_content=bytes(I_NEW_INTENTION % (teacher.name, teacher.account), encoding="utf8"),
             )
         response = {'status': True, 'info': S_DELETE_SUCCEED}
         return HttpResponse(json.dumps(response, ensure_ascii=False))
@@ -404,7 +404,7 @@ def clear_all_intention(request):
                 receiver_type='T',
                 information_type='T',
                 information_state='N',
-                information_content=bytes(I_NEW_INTENTION % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), student.name, student.account), encoding="utf8"),
+                information_content=bytes(I_NEW_INTENTION % (student.name, student.account), encoding="utf8"),
             )
         for s in user.student_fans.all():
             Information.objects.create(
@@ -412,7 +412,7 @@ def clear_all_intention(request):
                 receiver_type='S',
                 information_type='T',
                 information_state='N',
-                information_content=bytes(I_NEW_INTENTION % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), student.name, student.account), encoding="utf8"),
+                information_content=bytes(I_NEW_INTENTION % (student.name, student.account), encoding="utf8"),
             )
         response = {'status': True, 'info': S_DELETE_SUCCEED}
         return HttpResponse(json.dumps(response, ensure_ascii=False))

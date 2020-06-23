@@ -43,7 +43,7 @@ def logon(request):
             receiver_type='T',
             information_type='T',
             information_state='N',
-            information_content=bytes(I_NEW_LOGIN % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), _account), encoding="utf8"),
+            information_content=bytes(I_NEW_LOGIN % _account, encoding="utf8"),
         )
     else:
         student = Student.objects.create(user=user, account=_account, password=_password, name=_name)
@@ -52,7 +52,7 @@ def logon(request):
             receiver_type='S',
             information_type='T',
             information_state='N',
-            information_content=bytes(I_NEW_LOGIN % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), _account), encoding="utf8"),
+            information_content=bytes(I_NEW_LOGIN % _account, encoding="utf8"),
         )
     response = {'status': True, 'info': S_LOGON_SUCCEED}
     return HttpResponse(json.dumps(response, ensure_ascii=False))
@@ -171,7 +171,7 @@ def change_password(request):
                 receiver_type='T',
                 information_type='T',
                 information_state='N',
-                information_content=bytes(I_NEW_PASSWORD % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), teacher.name, teacher.account), encoding="utf8"),
+                information_content=bytes(I_NEW_PASSWORD % (teacher.name, teacher.account), encoding="utf8"),
             )
             response = {'status': True, 'info': S_CHANGE_PASSWORD_SUCCEED}
             return HttpResponse(json.dumps(response, ensure_ascii=False))
@@ -192,7 +192,7 @@ def change_password(request):
                 receiver_type='S',
                 information_type='T',
                 information_state='N',
-                information_content=bytes(I_NEW_PASSWORD % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), student.name, student.account), encoding="utf8"),
+                information_content=bytes(I_NEW_PASSWORD % (student.name, student.account), encoding="utf8"),
             )
             response = {'status': True, 'info': S_CHANGE_PASSWORD_SUCCEED}
             return HttpResponse(json.dumps(response, ensure_ascii=False))
